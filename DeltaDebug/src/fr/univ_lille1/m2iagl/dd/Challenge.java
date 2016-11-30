@@ -1,14 +1,13 @@
 package fr.univ_lille1.m2iagl.dd;
 
-import static javafx.scene.input.KeyCode.T;
+import java.util.List;
 
 /**
  * Defines a challenge asked to the others
  */
 public interface Challenge<I> {
 	Class<? extends I> getInputFormat();
-	I getInput1();
-	I getInput2();
+	List<I> getInputs();
 	boolean oracle(I input);
-	CauseEffectChain computeTrace(I x, I y);
+	String getJavaProgram();
 }
