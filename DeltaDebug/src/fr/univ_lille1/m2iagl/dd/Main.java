@@ -8,7 +8,9 @@ public class Main {
 	public static void main(String[] args) {
 		DDebuggerImpl ddebugger = new DDebuggerImpl();
 		Challenge1 challenge1 = new Challenge1();
-		ddebugger.debug(challenge1);
+		
+		CauseEffectChain cEC = ddebugger.debug(challenge1);
+		//Ici faudrait print la cEC, c'est la trace qui affiche l'origine du bug.
 	}
 
 }

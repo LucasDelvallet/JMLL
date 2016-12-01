@@ -22,21 +22,22 @@ public class DeltaDebug {
 	 * 
 	 * @return A minimized input that reproduces the failing/error condition
 	 */
-	public static <T> List<T> ddmin(List<T> inputs, Challenge<T> c) {
+	public static <T> CauseEffectChain ddmin(CauseEffectChain causeEffectChain, T inputFail, Challenge<T> c) {
+		
+		List<ChainElement> chainElements = causeEffectChain.getChain();
 		
 		int n = 2;
-		while(inputs.size() >= 2) {
-			List<List<T>> subsets = split(inputs, n);
+		while(chainElements.size() >= 2) {
+			List<List<ChainElement>> subsets = split(chainElements, n);
 			boolean complementFailing = false;
 			
-			for(List<T> subset : subsets){
-				List<T> complement = difference(inputs, subset);
+			for(List<ChainElement> subset : subsets){
+				List<ChainElement> complement = difference(chainElements, subset);
 				//Ici on donne à nourir l'oracle avec les inputs de base qui fail.
-				//C'est zéro pour l'instant, mais faut trouver un qui plante avant.
 				//Mais il faut changer le fonctionnement de celui ci
-				//avec les valeurs qu'ont changé.
-				if (!c.oracle(inputs.get(0))) {
-					inputs = complement;
+				//avec les valeurs qu'ont changé, elles sont dans le complement
+				if (!c.oracle(inputFail)) {
+					chainElements = complement;
 					n = Math.max(n - 1, 2);
 					complementFailing = true;
 					break;
@@ -45,16 +46,15 @@ public class DeltaDebug {
 			}
 
 			if (!complementFailing) {
-				if (n == inputs.size()) {
+				if (n == chainElements.size()) {
 					break;
 				}
-				
-				// increase set granularity
-				n = Math.min(n * 2, inputs.size());
+			
+				n = Math.min(n * 2, chainElements.size());
 			}
 		}
 
-		return inputs;
+		return new CauseEffectChainImpl(chainElements);
 	}
 
 	/**

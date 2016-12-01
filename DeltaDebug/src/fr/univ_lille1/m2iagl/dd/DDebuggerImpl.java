@@ -6,19 +6,25 @@ public class DDebuggerImpl<T> implements DDebugger<T> {
 
 	@Override
 	public CauseEffectChain debug(Challenge<T> c) {
+		CauseEffectChain cEC = null;
+		T inputFail = null;
 		
-		List<T> inputs = c.getInputs();
-				
-		DeltaDebug.ddmin(inputs, c);
-		
-		for(int i = 0; i < inputs.size(); i++){
-			System.out.println("Input " + (i+1) + " valeur: " + inputs.get(i));
-			System.out.println("Résultat : " +  c.oracle(inputs.get(i)) + "\r\n");
-			
+		//Ici je trouve un input qui fait fail.
+		for(T input : c.getInputs()){
+			//En testant l'oracle, je devrait récuperer la CauseEffectChain 
+			//pour pouvoir manipuler les variables. Spoon est notre sauveur.
+			if(c.oracle(input)){ 
+				inputFail = input;
+				cEC = null; //Pas null normalement
+			}
+		}
+		if(inputFail == null){
+			return null; // Y'a pas d'input qui fait Fail.
 		}
 		
-		
-		return null;
+		// Ici on retourne CauseEffectChain qui trouve le bug, on doit juste l'afficher en suite.
+		//Elle a été trouvée avec la méthode ddmin
+		return DeltaDebug.ddmin(cEC, inputFail ,c); 
 	}
 
 }
