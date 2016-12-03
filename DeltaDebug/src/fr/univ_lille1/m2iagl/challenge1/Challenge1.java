@@ -27,6 +27,12 @@ public class Challenge1 implements Challenge<Integer> {
 	@Override
 	public boolean oracle(Integer input) {
 		
+		
+		//Tout ça ne doit pas être dans l'oracle
+		//Ici c'est juste pour vérifier si ça fail ou non.
+		//Nous, on doit utiliser le programme présent dans
+		//getJavaProgram pour permettre de le manipuler
+		//a notre guise.
 		try {
 			Interpreter interpreter = new Interpreter();
 	
@@ -65,7 +71,7 @@ public class Challenge1 implements Challenge<Integer> {
 	public String getJavaProgram() {
 		String program = "";
 
-		program += "public static boolean division(int i){";
+		//program += "public static boolean division(int i){";
 		program += "int j = 5;";
 		program += "i = i + 2;";
 		program += "i = i - j;";
@@ -77,7 +83,7 @@ public class Challenge1 implements Challenge<Integer> {
 		program += "}catch(ArithmeticException e){";
 		program += "	return false;";
 		program += "}";
-		program += "}";
+		//program += "}";
 		
 		return program;
 	}
