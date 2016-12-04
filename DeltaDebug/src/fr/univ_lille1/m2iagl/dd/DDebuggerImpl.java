@@ -1,7 +1,5 @@
 package fr.univ_lille1.m2iagl.dd;
 
-import java.util.List;
-
 public class DDebuggerImpl<T> implements DDebugger<T> {
 
 	@Override
