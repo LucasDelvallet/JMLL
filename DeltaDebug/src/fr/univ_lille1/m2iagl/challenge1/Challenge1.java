@@ -26,64 +26,25 @@ public class Challenge1 implements Challenge<Integer> {
 
 	@Override
 	public boolean oracle(Integer input) {
-		
-		
-		//Tout ça ne doit pas être dans l'oracle
-		//Ici c'est juste pour vérifier si ça fail ou non.
-		//Nous, on doit utiliser le programme présent dans
-		//getJavaProgram pour permettre de le manipuler
-		//a notre guise.
-		try {
-			Interpreter interpreter = new Interpreter();
-	
-			
-			//http://www.beanshell.org/javadoc/bsh/Interpreter.html
-			
-			 Interpreter bsh = new Interpreter();
-
-             // Evaluate statements and expressions
-             bsh.eval("foo=Math.sin(0.5)");
-             bsh.eval("bar=foo*5; bar=Math.cos(bar);");
-             bsh.eval("for(i=0; i<10; i++) { print(\"hello\"); }");
-             // same as above using java syntax and apis only
-             bsh.eval("for(int i=0; i<10; i++) { System.out.println(\"hello\"); }");
-
-
-             // Use set() and get() to pass objects in and out of variables
-             bsh.set( "date", new Date() );
-             Date date = (Date)bsh.get( "date" );
-             // This would also work:
-             Date date2 = (Date)bsh.eval( "date" );
-
-             bsh.eval("year = date.getYear()");
-             Integer year = (Integer)bsh.get("year");  // primitives use wrappers
-			
-			
-			//interpreter.eval(getJavaProgram());
-			
-		} catch (EvalError e) {
-		}
-		
 		return Oracle1.division(input);
 	} 
 
 	@Override
 	public String getJavaProgram() {
-		String program = "";
-
-		//program += "public static boolean division(int i){";
-		program += "int j = 5;";
-		program += "i = i + 2;";
-		program += "i = i - j;";
-		program += "i = i * 2;";
-
-		program += "try{";
-		program += "int result = j / i;";
-		program += "return true;";
-		program += "}catch(ArithmeticException e){";
-		program += "	return false;";
-		program += "}";
-		//program += "}";
+		String program = String.join("\n"
+				 ,"public static boolean division(int i){"
+		         ,	"int j = 5;"
+		         ,	"i = i + 2;"
+		         ,	"i = i - j;"
+		         ,	"i = i * 2;"
+		         ,	"try{"
+		         ,		"int result = j / i;"
+		         ,		"return true;"
+		         ,	"}catch(ArithmeticException e){"
+		         ,		"return false;"
+		         ,	"}"
+		         ,"}"
+		);
 		
 		return program;
 	}
