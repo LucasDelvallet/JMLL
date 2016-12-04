@@ -1,4 +1,4 @@
-/target/
+/target/*
 /bin/
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
@@ -7,7 +7,7 @@
 # User-specific stuff:
 .idea/workspace.xml
 .idea/tasks.xml
-.idea/
+/.idea/*
 # Sensitive or high-churn files:
 .idea/dataSources/
 .idea/dataSources.ids
@@ -45,5 +45,4 @@ crashlytics-build.properties
 fabric.properties
 
 /.vscode/
-/target/
 
