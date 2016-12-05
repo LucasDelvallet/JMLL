@@ -5,7 +5,7 @@ public class TestVariable {
 	public void Test(){
 		Integer var = 3;
 		Integer plouf = var;
-		plouf = var;
+		plouf = 50;
 		var = 5;
 	}
 	
