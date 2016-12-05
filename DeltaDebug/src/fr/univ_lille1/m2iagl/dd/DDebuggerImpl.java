@@ -17,9 +17,9 @@ public class DDebuggerImpl<T> implements DDebugger<T> {
 		for (T input : c.getInputs()) {
 			// En testant l'oracle, je devrait récuperer la CauseEffectChain
 			// pour pouvoir manipuler les variables. Spoon est notre sauveur.
-			if (c.oracle(input)) {
+			if (!c.oracle(input)) {
 				inputFail = input;
-				cEC = null; // Pas null normalement
+				cEC = getCauseEffectChain(c); // Pas null normalement
 			}
 		}
 		if (inputFail == null) {
@@ -34,11 +34,6 @@ public class DDebuggerImpl<T> implements DDebugger<T> {
 
 	public CauseEffectChain getCauseEffectChain(Challenge<T> c) {
 
-		// Tout ça ne doit pas être dans l'oracle
-		// Ici c'est juste pour vérifier si ça fail ou non.
-		// Nous, on doit utiliser le programme présent dans
-		// getJavaProgram pour permettre de le manipuler
-		// a notre guise.
 		try {
 			Interpreter interpreter = new Interpreter();
 
