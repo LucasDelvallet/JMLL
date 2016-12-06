@@ -37,5 +37,9 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 			System.out.println("Line : " + ce.getLine() + " | Variable name : " + ce.getVariable() + " | " + ce.getDescription());
 		}
 	}
+	
+	public void clearChainElements(){
+		chainElements.clear();
+	}
 
 }

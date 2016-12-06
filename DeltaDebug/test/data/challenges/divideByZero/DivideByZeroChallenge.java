@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univ_lille1.m2iagl.dd.Challenge;
-
+/*
 public class DivideByZeroChallenge implements Challenge<DivideByZeroInput> {
 
 	@Override
@@ -48,4 +48,4 @@ public class DivideByZeroChallenge implements Challenge<DivideByZeroInput> {
 	
 	
 
-}
+}*/

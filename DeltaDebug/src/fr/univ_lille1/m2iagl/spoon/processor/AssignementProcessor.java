@@ -27,19 +27,19 @@ public class AssignementProcessor extends AbstractProcessor<CtAssignment<Integer
 
 	@Override
 	public void process(CtAssignment<Integer, Integer> candidate) {
-	//	if (!(candidate instanceof CtVariableAccess<Integer>)) {
-	//		return;
-	//	}
-		
 		CtAssignment<Integer, Integer> op = (CtAssignment<Integer, Integer>)candidate;
 		
-		//Launcher spoon = new Launcher();
-		//Factory factory = spoon.createFactory();
-		//CtExpression a = factory.Core().createLiteral().setValue(42);
+		//TODO: On me demande de modifier la valeur
+		//if()
+		//{
+			Launcher spoon = new Launcher();
+			Factory factory = spoon.createFactory();
+			CtExpression a = factory.Core().createLiteral().setValue(42);
+			op.setAssignment(a);
+		//}
 		
 		
 		ChainElementImpl ce = new ChainElementImpl(String.valueOf(op.getPosition().getLine()), op.getAssigned().toString(), "Assigned to : " + op.getAssignment());
 		CauseEffectChainSingleton.getInstance().getCauseEffectChain().addElement(ce);
-		//System.out.println("Line : " + op.getPosition().getLine() + " | " + op.getAssigned() + " = " + op.getAssignment());
 	}
 }

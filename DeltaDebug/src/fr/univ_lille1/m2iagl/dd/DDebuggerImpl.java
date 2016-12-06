@@ -1,5 +1,9 @@
 package fr.univ_lille1.m2iagl.dd;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,46 +14,39 @@ public class DDebuggerImpl<T> implements DDebugger<T> {
 
 	@Override
 	public CauseEffectChain debug(Challenge<T> c) {
-		CauseEffectChain cEC = getCauseEffectChain(c);
 		T inputFail = null;
+		T inputSucess = null;
 
-		// Ici je trouve un input qui fait fail.
 		for (T input : c.getInputs()) {
-			// En testant l'oracle, je devrait récuperer la CauseEffectChain
-			// pour pouvoir manipuler les variables. Spoon est notre sauveur.
-			if (!c.oracle(input)) {
+			try{
+				c.challenge(input);
+				inputSucess = input;
+			}catch(Exception e){
 				inputFail = input;
-				cEC = getCauseEffectChain(c); // Pas null normalement
 			}
 		}
-		if (inputFail == null) {
-			return null; // Y'a pas d'input qui fait Fail.
+		if (inputFail == null || inputSucess == null) {
+			return null; // Y'a pas d'input qui fait Fail ou Success
 		}
 
-		// Ici on retourne CauseEffectChain qui trouve le bug, on doit juste
-		// l'afficher en suite.
-		// Elle a été trouvée avec la méthode ddmin
-		return DeltaDebug.ddmin(cEC, inputFail, c);
+		writeChallenge(c);
+		
+		return DeltaDebug.ddmin(inputFail, inputSucess, c);
 	}
 
-	public CauseEffectChain getCauseEffectChain(Challenge<T> c) {
-
+	public void writeChallenge(Challenge<T> c){
 		try {
-			Interpreter interpreter = new Interpreter();
+			List<String> lines = new ArrayList<String>();
+			lines.add("package fr.univ_lille1.m2iagl.spoon.templatechallenge;");
+			lines.add("public class TemplateChallenge<T> implements ITemplateChallenge<T>{");
+			lines.add(c.getJavaProgram());
+			lines.add("}");
 
-			// Evaluate statements and expressions
-			String t = c.getJavaProgram();
-			interpreter.eval(t);
-
-			interpreter.eval("boolean t = division(5)");
-			System.out.println(interpreter.get("t")); // Print true.
-
-			interpreter.eval("boolean t = division(3)"); // Print false.
-			System.out.println(interpreter.get("t"));
-
-		} catch (EvalError e) {
+			Files.write(Paths.get("src/fr/univ_lille1/m2iagl/spoon/templatechallenge/TemplateChallenge.java"), lines);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return null;
 	}
+	
 
 }

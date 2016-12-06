@@ -28,19 +28,20 @@ public class VariableProcessor extends AbstractProcessor<CtVariable<Integer>> {
 
 	@Override
 	public void process(CtVariable<Integer> candidate) {
-	//	if (!(candidate instanceof CtVariableAccess<Integer>)) {
-	//		return;
-	//	}
-		
+	
 		CtVariable<Integer> op = (CtVariable<Integer>)candidate;
 		
-		//Launcher spoon = new Launcher();
-		//Factory factory = spoon.createFactory();
-		//CtExpression a = factory.Core().createLiteral().setValue(42);
-		//op.setAssignment(a);	
+		//TODO: On me demande de modifier la valeur
+		//if()
+		//{
+			//Launcher spoon = new Launcher();
+			//Factory factory = spoon.createFactory();
+			//CtExpression a = factory.Core().createLiteral().setValue(42);
+			//op.setAssignment(a);	
+		//}
+		
 		
 		ChainElementImpl ce = new ChainElementImpl(String.valueOf(op.getPosition().getLine()), op.getSimpleName().toString(), "Declared with value : " + op.getDefaultExpression());
 		CauseEffectChainSingleton.getInstance().getCauseEffectChain().addElement(ce);
-		//System.out.println("Line : " + op.getPosition().getLine() + " | " + op.getSimpleName() + " = " + op.getDefaultExpression());
 	}
 }

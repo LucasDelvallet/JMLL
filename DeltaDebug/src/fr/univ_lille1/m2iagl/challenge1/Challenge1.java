@@ -23,30 +23,43 @@ public class Challenge1 implements Challenge<Integer> {
 		inputs.add(3); // Fail
 		return inputs;
 	}
+	
+	@Override
+	public Object doIt(Integer input) {
+		int j = 5;
+		input = input + 2;
+		input = input - j;
+		input = input * 2;
+		
+		int result = j / input;
+		return result;
+	}
 
 	@Override
-	public boolean oracle(Integer input) {
-		return Oracle1.division(input);
+	public void challenge(Integer input) {
+		int j = 5;
+		input = input + 2;
+		input = input - j;
+		input = input * 2;
+		if(true){}
+		int result = j / input;
 	} 
 
 	@Override
 	public String getJavaProgram() {
 		String program = String.join("\n"
-				 ,"public static boolean division(int i){"
+				 ,"public void challenge(int i){"
 		         ,	"int j = 5;"
 		         ,	"i = i + 2;"
 		         ,	"i = i - j;"
 		         ,	"i = i * 2;"
-		         ,	"try{"
-		         ,		"int result = j / i;"
-		         ,		"return true;"
-		         ,	"}catch(ArithmeticException e){"
-		         ,		"return false;"
-		         ,	"}"
+		         ,	"int result = j / i;"
 		         ,"}"
 		);
 		
 		return program;
 	}
+
+
 
 }
