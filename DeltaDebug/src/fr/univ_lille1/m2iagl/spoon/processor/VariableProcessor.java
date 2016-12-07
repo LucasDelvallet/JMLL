@@ -24,8 +24,8 @@ public class VariableProcessor {
 	public static Object process(Object e) {
 		CtVariable op = (CtVariable) e;
 
-		ChainElementImpl ce = new ChainElementImpl(String.valueOf(op.getPosition().getLine()),
-				op.getSimpleName().toString(), "");
+		ChainElementImpl ce = new ChainElementImpl(String.valueOf(op.getPosition().getLine() - 2),
+				op.getSimpleName().toString(), " Déclaration : " + op.getDefaultExpression() + "  // Valeur : ");
 		CauseEffectChainSingleton.getInstance().getCauseEffectChain().addElement(ce);
 		return op;
 	}

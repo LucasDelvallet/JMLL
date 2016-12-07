@@ -36,6 +36,6 @@ public class ChainElementImpl implements ChainElement{
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		this.description += description;
 	}
 }

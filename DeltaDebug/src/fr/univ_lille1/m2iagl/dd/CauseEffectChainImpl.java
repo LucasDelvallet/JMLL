@@ -42,7 +42,7 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 		});
 		
 		for(ChainElement ce : chainElements){
-			System.out.println("Line : " + ce.getLine() + " | Variable name : " + ce.getVariable() + "   value =  " + ce.getDescription());
+			System.out.println("Line : " + ce.getLine() + "     |     Variable name : " + ce.getVariable() + "    |    " + ce.getDescription());
 		}
 	}
 	
