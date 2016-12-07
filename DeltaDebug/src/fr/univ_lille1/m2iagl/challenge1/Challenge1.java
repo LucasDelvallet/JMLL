@@ -12,7 +12,6 @@ public class Challenge1 implements Challenge<Integer> {
 
 	@Override
 	public Class<? extends Integer> getInputFormat() {
-		// TODO Auto-generated method stub
 		return Integer.class;
 	}
 
@@ -48,12 +47,12 @@ public class Challenge1 implements Challenge<Integer> {
 	@Override
 	public String getJavaProgram() {
 		String program = String.join("\n"
-				 ,"public void challenge(int i){"
-		         ,	"int j = 5;"
+				 ,"public void challenge(Integer i){"
+		         ,	"Integer j = 5;"
 		         ,	"i = i + 2;"
 		         ,	"i = i - j;"
 		         ,	"i = i * 2;"
-		         ,	"int result = j / i;"
+		         ,	"Integer result = j / i;"
 		         ,"}"
 		);
 		

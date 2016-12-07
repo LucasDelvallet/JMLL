@@ -43,7 +43,7 @@ public class DeltaDebug {
 
 			CauseEffectChain cECFail = getCauseEffectChain(inputFail, c);
 			CauseEffectChain cECSuccess = getCauseEffectChain(inputSuccess, c);
-			CauseEffectChainSingleton.getInstance()
+			//CauseEffectChainSingleton.getInstance()
 			List<ChainElement> cEsReturn = null;
 
 			int n = 2;
@@ -62,13 +62,14 @@ public class DeltaDebug {
 
 					
 					
-					// TODO: Modifier le programme selon le complement
+					// TODO: Mettre le complement dans le singleton
+					
 
 					ITemplateChallenge tC = (ITemplateChallenge) loadModifiedClass().newInstance();
 					tC.challenge(inputFail);
 					
-					
-					if () {
+					//A Changer
+					if (true) {
 						cEsReturn = complement;
 						n = Math.max(n - 1, 2);
 						some_complement_is_failing = true;
