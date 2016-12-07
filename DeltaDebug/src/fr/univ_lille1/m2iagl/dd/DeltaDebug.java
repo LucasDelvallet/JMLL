@@ -1,5 +1,6 @@
 package fr.univ_lille1.m2iagl.dd;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
@@ -65,8 +66,8 @@ public class DeltaDebug {
 					// TODO: Mettre le complement dans le singleton
 					
 
-					ITemplateChallenge tC = (ITemplateChallenge) loadModifiedClass().newInstance();
-					tC.challenge(inputFail);
+					//ITemplateChallenge tC = (ITemplateChallenge) loadModifiedClass().newInstance();
+					//tC.challenge(inputFail);
 					
 					//A Changer
 					if (true) {
@@ -109,9 +110,46 @@ public class DeltaDebug {
 	}
 
 	public static Class loadModifiedClass() throws Exception {
-		URLClassLoader loader = new URLClassLoader(
-				new URL[] { new URL("file://" + "target/spooned/fr/univ_lille1/m2iagl/spoon/templatechallenge/") });
-		return loader.loadClass("TemplateChallenge");
+		
+		// Create a File object on the root of the directory 
+		   // containing the class file
+		   File file = new File((DeltaDebug.class.getProtectionDomain().getCodeSource().getLocation().toString().replaceAll("/target/classes", "")) + "/target/spooned/");
+		    
+		  
+		       // Convert File to a URL
+		       URL url = file.toURI().toURL();          // file:/c:/class/
+		       URL[] urls = new URL[]{url};
+		    
+		       // Create a new class loader with the directory
+		       ClassLoader loader = new URLClassLoader(urls);
+		    
+		       // Load in the class; Class.childclass should be located in
+		       // the directory file:/c:/class/user/information
+		       return loader.loadClass("fr.univ_lille1.m2iagl.spoon.templatechallenge.TemplateChallenge");
+		   
+		
+		
+		
+		/*File f = new File((DeltaDebug.class.getProtectionDomain().getCodeSource().getLocation().toString().replaceAll("/target/classes", "")) + "/target/spooned/fr/univ_lille1/m2iagl/spoon/templatechallenge/TemplateChallenge.class");
+		String ff = f.getAbsolutePath();
+		String fff = f.getCanonicalPath();
+		String ffff = f.getPath();
+
+		ffff = ffff.replaceAll("file:", "");
+		
+		Desktop.getDesktop().open(new File(ffff));
+		
+		ClassLoader cl = new URLClassLoader(new URL[] {f.toURI().toURL()});
+		return cl.loadClass("TemplateChallenge");
+*/
+		
+		//URLClassLoader loader = new URLClassLoader(
+		//		new URL[] {new URL(ffff)});
+		
+		
+		//return ClassLoader.getSystemClassLoader().loadClass("TemplateChallenge");
+		
+		//return loader.loadClass("TemplateChallenge");
 	}
 
 }

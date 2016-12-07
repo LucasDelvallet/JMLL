@@ -26,4 +26,16 @@ public class ChainElementImpl implements ChainElement{
 	public String getDescription() {
 		return description;
 	}
+	
+	public void setLine(String line) {
+		this.line = line;
+	}
+
+	public void setVariable(String variable) {
+		this.variable = variable;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }

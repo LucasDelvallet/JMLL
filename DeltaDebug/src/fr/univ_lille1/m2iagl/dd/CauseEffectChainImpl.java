@@ -21,6 +21,10 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 		chainElements.add(element);
 	}
 	
+	public void setChainElementDescription(int index, String description){
+		((ChainElementImpl)(chainElements.get(index))).setDescription(description);
+	}
+	
 	@Override
 	public List<ChainElement> getChain() {
 		return chainElements;
