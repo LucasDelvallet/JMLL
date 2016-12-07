@@ -30,6 +30,10 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 		return chainElements;
 	}
 	
+	public void setChain(List<ChainElement> chainElements){
+		this.chainElements = chainElements;
+	}
+	
 	public void print(){
 		Collections.sort(chainElements, new Comparator<ChainElement>() {
 			public int compare(ChainElement o1, ChainElement o2) {
@@ -38,7 +42,7 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 		});
 		
 		for(ChainElement ce : chainElements){
-			System.out.println("Line : " + ce.getLine() + " | Variable name : " + ce.getVariable() + " | " + ce.getDescription());
+			System.out.println("Line : " + ce.getLine() + " | Variable name : " + ce.getVariable() + "   value =  " + ce.getDescription());
 		}
 	}
 	

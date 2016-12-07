@@ -23,39 +23,39 @@ import spoon.reflect.declaration.CtVariable;
 import spoon.reflect.factory.Factory;
 import spoon.reflect.reference.CtExecutableReference;
 import spoon.reflect.reference.CtVariableReference;
+import spoon.reflect.visitor.filter.TypeFilter;
+import spoon.support.reflect.declaration.CtMethodImpl;
 import spoon.support.reflect.reference.CtVariableReferenceImpl;
 
 
-public class AssignementProcessor extends AbstractProcessor<CtAssignment<Integer, Integer>> {
+public class AssignementProcessor {
 	
-	@Override
-	public boolean isToBeProcessed(CtAssignment<Integer, Integer> candidate) {
-		return candidate instanceof CtAssignment;
-	}
+	public static Object process(Object e) {
+		CtAssignment op = (CtAssignment) e;
 
-	@Override
-	public void process(CtAssignment<Integer, Integer> candidate) {
-		CtAssignment<Integer, Integer> op = (CtAssignment<Integer, Integer>)candidate;
+		Launcher spoon = new Launcher();
+		Factory factory = spoon.createFactory();
+		List<CtExpression<?>> argsL = new ArrayList<CtExpression<?>>();
+		argsL.add(op.getAssignment());
+		CtInvocation a = factory.Core().createInvocation().setArguments(argsL);
+
+		Collection<CtExecutableReference<?>> allExecutables = op.getParent(CtExecutable.class)
+				.getParent(CtClass.class).getAllMethods();
 		
-		//TODO: On me demande de modifier la valeur
-		//if()
-		//{
-			Launcher spoon = new Launcher();
-			Factory factory = spoon.createFactory();
-			List<CtExpression<?>> args = new ArrayList<CtExpression<?>>();
-			args.add(op.getAssignment());
-			CtInvocation a = factory.Core().createInvocation().setArguments(args);
-			
-			Collection<CtExecutableReference<?>> allExecutables = candidate.getParent(CtExecutable.class).getParent(CtClass.class).getAllExecutables();
-			CtExecutableReference<?>[] allExecutablesArray = new CtExecutableReference<?>[3];
-			allExecutables.toArray(allExecutablesArray);
-			
-			a.setExecutable(allExecutablesArray[0]);
-			op.setAssignment(a);
-		//}
+
+		int index = -1;
+		List<CtMethodImpl> listctEx = new ArrayList(allExecutables);
+		for(CtMethodImpl ctEx : listctEx){
+			index++;
+			if(ctEx.getSimpleName().equals("debug")){
+				a.setExecutable(listctEx.get(index).getReference());
+				op.setAssignment(a);
+			}
+		}
 		
-		
-		ChainElementImpl ce = new ChainElementImpl(String.valueOf(op.getPosition().getLine()), op.getAssigned().toString(), "Assigned to : " + op.getAssignment());
-		CauseEffectChainSingleton.getInstance().getCauseEffectChain().addElement(ce);
+		ChainElementImpl ce = new ChainElementImpl(String.valueOf(op.getPosition().getLine()), op.getAssigned().toString(), "");
+		CauseEffectChainSingleton.getInstance().getCauseEffectChain().addElement(ce);	
+	
+		return op;
 	}
 }

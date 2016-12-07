@@ -19,29 +19,14 @@ import spoon.reflect.reference.CtVariableReference;
 import spoon.support.reflect.reference.CtVariableReferenceImpl;
 
 
-public class VariableProcessor extends AbstractProcessor<CtVariable<Integer>> {
+public class VariableProcessor {
 	
-	@Override
-	public boolean isToBeProcessed(CtVariable<Integer> candidate) {
-		return candidate instanceof CtVariable;
-	}
+	public static Object process(Object e) {
+		CtVariable op = (CtVariable) e;
 
-	@Override
-	public void process(CtVariable<Integer> candidate) {
-	
-		CtVariable<Integer> op = (CtVariable<Integer>)candidate;
-		
-		//TODO: On me demande de modifier la valeur
-		//if()
-		//{
-			//Launcher spoon = new Launcher();
-			//Factory factory = spoon.createFactory();
-			//CtExpression a = factory.Core().createLiteral().setValue(42);
-			//op.setAssignment(a);	
-		//}
-		
-		
-		ChainElementImpl ce = new ChainElementImpl(String.valueOf(op.getPosition().getLine()), op.getSimpleName().toString(), "Declared with value : " + op.getDefaultExpression());
+		ChainElementImpl ce = new ChainElementImpl(String.valueOf(op.getPosition().getLine()),
+				op.getSimpleName().toString(), "");
 		CauseEffectChainSingleton.getInstance().getCauseEffectChain().addElement(ce);
+		return op;
 	}
 }
