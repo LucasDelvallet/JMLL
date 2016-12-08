@@ -1,4 +1,4 @@
-package fr.univ_lille1.m2iagl.challenge1;
+package fr.univ_lille1.m2iagl.challenge;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,19 +40,18 @@ public class Challenge1 implements Challenge<Integer> {
 		input = input + 2;
 		input = input - j;
 		input = input * 2;
-		if(true){}
 		int result = j / input;
 	} 
 
 	@Override
 	public String getJavaProgram() {
 		String program = String.join("\n"
-				 ,"public void challenge(Integer i){"
+				 ,"public void challenge(Integer input){"
 		         ,	"Integer j = 5;"
-		         ,	"i = i + 2;"
-		         ,	"i = i - j;"
-		         ,	"i = i * 2;"
-		         ,	"Integer result = j / i;"
+		         ,	"input = input + 2;"
+		         ,	"input = input - j;"
+		         ,	"input = input * 2;"
+		         ,	"Integer result = j / input;"
 		         ,"}"
 		);
 		

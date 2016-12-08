@@ -21,13 +21,18 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 		chainElements.add(element);
 	}
 	
-	public void setChainElementDescription(int index, String description){
+	public void setChainElementDescription(int index, Object description){
 		((ChainElementImpl)(chainElements.get(index))).setDescription(description);
 	}
 	
 	@Override
 	public List<ChainElement> getChain() {
 		return chainElements;
+	}
+	
+	public void setChain(List<ChainElement> chainElements){
+		this.chainElements.clear();
+		this.chainElements.addAll(chainElements);
 	}
 	
 	public void print(){
@@ -38,7 +43,7 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 		});
 		
 		for(ChainElement ce : chainElements){
-			System.out.println("Line : " + ce.getLine() + " | Variable name : " + ce.getVariable() + " | " + ce.getDescription());
+			System.out.println("Line : " + ce.getLine() + "     |     Variable name : " + ce.getVariable() + "    |    " + ce.getDescription());
 		}
 	}
 	
