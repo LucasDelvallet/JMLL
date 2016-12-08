@@ -49,7 +49,7 @@ public class DDebuggerImpl<T> implements DDebugger<T> {
 		    lines.add("java.util.List<fr.univ_lille1.m2iagl.dd.ChainElement> cs = fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton.getInstance().getCauseEffectChain().getChain();");
 			lines.add("for(int i = 0; i < cs.size(); i++){");
 			lines.add("if(Integer.parseInt(cs.get(i).getLine()) == line){");
-			lines.add("fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton.getInstance().getCauseEffectChain().setChainElementDescription(i, input.toString());");
+			lines.add("fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton.getInstance().getCauseEffectChain().setChainElementDescription(i, input);");
 			lines.add("}");
 			lines.add("}");
 		    lines.add("return input;");

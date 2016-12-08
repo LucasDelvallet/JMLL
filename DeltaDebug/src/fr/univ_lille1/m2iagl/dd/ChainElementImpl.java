@@ -4,9 +4,9 @@ public class ChainElementImpl implements ChainElement{
 
 	private String line;
 	private String variable;
-	private String description;
+	private Object description;
 	
-	public ChainElementImpl(String line, String variable, String description){
+	public ChainElementImpl(String line, String variable, Object description){
 		this.line = line;
 		this.variable = variable;
 		this.description = description;
@@ -23,7 +23,7 @@ public class ChainElementImpl implements ChainElement{
 	}
 
 	@Override
-	public String getDescription() {
+	public Object getDescription() {
 		return description;
 	}
 	
@@ -35,7 +35,7 @@ public class ChainElementImpl implements ChainElement{
 		this.variable = variable;
 	}
 
-	public void setDescription(String description) {
-		this.description += description;
+	public void setDescription(Object description) {
+		this.description = description;
 	}
 }

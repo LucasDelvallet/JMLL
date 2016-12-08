@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import fr.univ_lille1.m2iagl.spoon.processor.VariableProcessor;
 import fr.univ_lille1.m2iagl.spoon.templatechallenge.ITemplateChallenge;
 import spoon.Launcher;
 import spoon.reflect.code.CtAssignment;
+import spoon.reflect.code.CtLocalVariable;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.declaration.CtVariable;
@@ -46,7 +48,7 @@ public class DeltaDebug {
 				e = AssignementProcessor.process(e);
 			}
 
-			for (Object e : cChallenge.getElements(new TypeFilter(CtVariable.class))) {
+			for (Object e : cChallenge.getElements(new TypeFilter(CtLocalVariable.class))) {
 				e = VariableProcessor.process(e);
 			}
 
@@ -72,13 +74,23 @@ public class DeltaDebug {
 	}
 
 	public static <T> CauseEffectChain ddmin(T inputFail, T inputSuccess, Challenge<T> c) {
-
+		CauseEffectChainImpl cECFail = new CauseEffectChainImpl();
+		CauseEffectChainImpl cECSuccess = new CauseEffectChainImpl();
+		
 		generateCauseEffectChain(inputFail, c);
-		CauseEffectChain cECFail = CauseEffectChainSingleton.getInstance().getCauseEffectChain();
+		cECFail.setChain(CauseEffectChainSingleton.getInstance().getCauseEffectChain().getChain());
 		generateCauseEffectChain(inputSuccess, c);
-		CauseEffectChain cECSuccess = CauseEffectChainSingleton.getInstance().getCauseEffectChain();
+		cECSuccess.setChain(CauseEffectChainSingleton.getInstance().getCauseEffectChain().getChain());
 		List<ChainElement> cEsReturn = null;
-
+		
+		System.out.println("==== Chaine d'execution Input Success ====");
+		((CauseEffectChainImpl)cECSuccess).print();
+		
+		System.out.println("\r\n==== Chaine d'execution Input Fail ====");
+		((CauseEffectChainImpl)cECFail).print();
+		
+		System.out.println("\r\n==== Chain de débugage ====");
+		
 		int n = 2;
 
 		cEsReturn = difference(cECFail.getChain(), cECSuccess.getChain());
@@ -87,16 +99,18 @@ public class DeltaDebug {
 			int subset_lenght = cEsReturn.size() / n;
 			boolean some_complement_is_failing = false;
 
-			while (start < cEsReturn.size()) {
+			while (start+subset_lenght < cEsReturn.size()) {
 				List<ChainElement> complement = new ArrayList<ChainElement>();
 				complement.addAll(cEsReturn.subList(0, start));
 				complement.addAll(cEsReturn.subList(start + subset_lenght, cEsReturn.size()));
 
+				CauseEffectChainSingleton.getInstance().getDiffCauseEffectChain().clearChainElements();
 				CauseEffectChainImpl cDiff = CauseEffectChainSingleton.getInstance().getDiffCauseEffectChain();
 				cDiff.setChain(complement);
 
 				if (generateCauseEffectChain(inputFail, c)) {
-					cEsReturn = complement;
+					cEsReturn.clear();
+					cEsReturn.addAll(complement);
 					n = Math.max(n - 1, 2);
 					some_complement_is_failing = true;
 					break;

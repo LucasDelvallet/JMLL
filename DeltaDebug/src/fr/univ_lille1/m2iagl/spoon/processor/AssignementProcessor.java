@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import fr.univ_lille1.m2iagl.dd.CauseEffectChainImpl;
 import fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton;
+import fr.univ_lille1.m2iagl.dd.ChainElement;
 import fr.univ_lille1.m2iagl.dd.ChainElementImpl;
 import spoon.Launcher;
 import spoon.processing.AbstractProcessor;
@@ -32,17 +34,25 @@ public class AssignementProcessor {
 	
 	public static Object process(Object e) {
 		CtAssignment op = (CtAssignment) e;
-
+		
 		Launcher spoon = new Launcher();
 		Factory factory = spoon.createFactory();
+		
+		int line = op.getPosition().getLine() - 2;
+		CauseEffectChainImpl cDiff = CauseEffectChainSingleton.getInstance().getDiffCauseEffectChain();
+		for(ChainElement c : cDiff.getChain()){
+			if(Integer.parseInt(c.getLine()) == line){
+				op.setAssignment(factory.Core().createLiteral().setValue(c.getDescription()));
+			}
+		}
+		
+
 		List<CtExpression<?>> argsL = new ArrayList<CtExpression<?>>();
 		argsL.add(op.getAssignment());
 		CtInvocation a = factory.Core().createInvocation().setArguments(argsL);
 
 		Collection<CtExecutableReference<?>> allExecutables = op.getParent(CtExecutable.class)
 				.getParent(CtClass.class).getAllMethods();
-		
-
 		int index = -1;
 		List<CtMethodImpl> listctEx = new ArrayList(allExecutables);
 		for(CtMethodImpl ctEx : listctEx){
@@ -53,7 +63,7 @@ public class AssignementProcessor {
 			}
 		}
 		
-		ChainElementImpl ce = new ChainElementImpl(String.valueOf(op.getPosition().getLine() - 2), op.getAssigned().toString(), "Affectation : " + op.getAssignment() + "  // Valeur : ");
+		ChainElementImpl ce = new ChainElementImpl(String.valueOf(line), op.getAssigned().toString(), "");
 		CauseEffectChainSingleton.getInstance().getCauseEffectChain().addElement(ce);	
 	
 		return op;

@@ -21,7 +21,7 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 		chainElements.add(element);
 	}
 	
-	public void setChainElementDescription(int index, String description){
+	public void setChainElementDescription(int index, Object description){
 		((ChainElementImpl)(chainElements.get(index))).setDescription(description);
 	}
 	
@@ -31,7 +31,8 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 	}
 	
 	public void setChain(List<ChainElement> chainElements){
-		this.chainElements = chainElements;
+		this.chainElements.clear();
+		this.chainElements.addAll(chainElements);
 	}
 	
 	public void print(){
