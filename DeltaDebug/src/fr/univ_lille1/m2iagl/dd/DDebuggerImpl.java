@@ -27,7 +27,8 @@ public class DDebuggerImpl<T> implements DDebugger<T> {
 			}
 		}
 		if (inputFail == null || inputSucess == null) {
-			return null; // Y'a pas d'input qui fait Fail ou Success
+			System.out.println("No failing or successing input. Sorry, i will crash now.");
+			return null;
 		}
 
 		writeChallenge(c);

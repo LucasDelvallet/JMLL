@@ -140,12 +140,14 @@ public class DeltaDebug {
 				ChainElement bb = b.get(j);
 
 				if (aa.getLine().equals(bb.getLine()) && aa.getVariable().equals(bb.getVariable())
-						&& aa.getDescription().equals(bb.getDescription())) {
+						&& !aa.getDescription().equals(bb.getDescription())) {
 					result.add(aa);
 					break;
 				}
 			}
 		}
+		
+		
 
 		return result;
 	}

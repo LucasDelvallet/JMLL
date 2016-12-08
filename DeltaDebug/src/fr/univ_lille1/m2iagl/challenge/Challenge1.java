@@ -1,4 +1,4 @@
-package fr.univ_lille1.m2iagl.challenge1;
+package fr.univ_lille1.m2iagl.challenge;
 
 import java.util.ArrayList;
 import java.util.Date;
