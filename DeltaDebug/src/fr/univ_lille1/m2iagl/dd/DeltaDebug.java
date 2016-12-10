@@ -1,13 +1,6 @@
 package fr.univ_lille1.m2iagl.dd;
 
-import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,76 +14,76 @@ import spoon.reflect.code.CtAssignment;
 import spoon.reflect.code.CtLocalVariable;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtMethod;
-import spoon.reflect.declaration.CtVariable;
 import spoon.reflect.visitor.filter.NameFilter;
 import spoon.reflect.visitor.filter.TypeFilter;
 
 public class DeltaDebug {
+	private static final String CHALLENGE_FILE = "src/fr/univ_lille1/m2iagl/spoon/templatechallenge/TemplateChallenge.java";
+	private static final String CHALLENGE_NAME = "TemplateChallenge";
 
-	public static <T> boolean generateCauseEffectChain(T input, Challenge<T> challenge) {
+	public static <T> boolean generateCauseEffectChain(T input, String challengeFile, String challengeName) {
+		CauseEffectChainSingleton.getInstance().resetCauseEffectChain();
 
+		// Create a TemplateChallenge launcher
+		Launcher l = new Launcher();
+		l.setArgs(new String[] {"-i", challengeFile});
+		l.addInputResource("src/test/resources/");
+		l.buildModel();
 
-			CauseEffectChainSingleton.getInstance().resetCauseEffectChain();
+		CtClass foo = (CtClass) l.getFactory().Package().getRootPackage()
+				.getElements(new NameFilter(challengeName)).get(0);
 
-			Launcher l = new Launcher();
-			l.setArgs(
-					new String[] { "-i", "src/fr/univ_lille1/m2iagl/spoon/templatechallenge/TemplateChallenge.java" });
-			l.addInputResource("src/test/resources/");
-			l.buildModel();
+		CtMethod cChallenge = (CtMethod) foo.getElements(new TypeFilter(CtMethod.class)).get(0);
 
-			CtClass foo = (CtClass) l.getFactory().Package().getRootPackage()
-					.getElements(new NameFilter("TemplateChallenge")).get(0);
+		// Apply transformations
+		for (Object e : cChallenge.getElements(new TypeFilter(CtAssignment.class))) {
+			e = AssignementProcessor.process(e);
+		}
 
-			
-			CtMethod cChallenge = (CtMethod) foo.getElements(new TypeFilter(CtMethod.class)).get(0);
-			
-			for (Object e : cChallenge.getElements(new TypeFilter(CtAssignment.class))) {
-				e = AssignementProcessor.process(e);
-			}
+		for (Object e : cChallenge.getElements(new TypeFilter(CtLocalVariable.class))) {
+			e = VariableProcessor.process(e);
+		}
 
-			for (Object e : cChallenge.getElements(new TypeFilter(CtLocalVariable.class))) {
-				e = VariableProcessor.process(e);
-			}
+		// Create a new instance
+		Class tCClass = null;
+		ITemplateChallenge tC = null;
+		try {
+			tCClass = InMemoryJavaCompiler.compile(foo.getQualifiedName(),
+					"package " + foo.getPackage().getQualifiedName() + ";" + foo.toString());
+			tC = (ITemplateChallenge) tCClass.newInstance();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
-			Class tCClass = null;
-			ITemplateChallenge tC = null;
-			try {
-				tCClass = InMemoryJavaCompiler.compile(foo.getQualifiedName(),
-						"package " + foo.getPackage().getQualifiedName() + ";" + foo.toString());
-			
-				tC = (ITemplateChallenge) tCClass.newInstance();			
-			}catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			
+		// Run to check success
 		boolean hasSucceded = true;
-		try{
+		try {
 			tC.challenge(input);
-		}catch (Exception e1) {
+		} catch (Exception e1) {
 			hasSucceded = false;
 		}
-		
+
 		return hasSucceded;
 	}
 
 	public static <T> CauseEffectChain ddmin(T inputFail, T inputSuccess, Challenge<T> c) {
 		CauseEffectChainImpl cECFail = new CauseEffectChainImpl();
 		CauseEffectChainImpl cECSuccess = new CauseEffectChainImpl();
-		
-		generateCauseEffectChain(inputFail, c);
+
+		generateCauseEffectChain(inputFail, CHALLENGE_FILE, CHALLENGE_NAME);
 		cECFail.setChain(CauseEffectChainSingleton.getInstance().getCauseEffectChain().getChain());
-		generateCauseEffectChain(inputSuccess, c);
+		generateCauseEffectChain(inputSuccess, CHALLENGE_FILE, CHALLENGE_NAME);
 		cECSuccess.setChain(CauseEffectChainSingleton.getInstance().getCauseEffectChain().getChain());
 		List<ChainElement> cEsReturn = null;
-		
+
 		System.out.println("==== Chaine d'execution Input Success ====");
-		((CauseEffectChainImpl)cECSuccess).print();
-		
+		((CauseEffectChainImpl) cECSuccess).print();
+
 		System.out.println("\r\n==== Chaine d'execution Input Fail ====");
-		((CauseEffectChainImpl)cECFail).print();
-		
+		((CauseEffectChainImpl) cECFail).print();
+
 		System.out.println("\r\n==== Chain de débugage ====");
-		
+
 		int n = 2;
 
 		cEsReturn = difference(cECFail.getChain(), cECSuccess.getChain());
@@ -99,7 +92,7 @@ public class DeltaDebug {
 			int subset_lenght = cEsReturn.size() / n;
 			boolean some_complement_is_failing = false;
 
-			while (start+subset_lenght < cEsReturn.size()) {
+			while (start + subset_lenght < cEsReturn.size()) {
 				List<ChainElement> complement = new ArrayList<ChainElement>();
 				complement.addAll(cEsReturn.subList(0, start));
 				complement.addAll(cEsReturn.subList(start + subset_lenght, cEsReturn.size()));
@@ -108,7 +101,7 @@ public class DeltaDebug {
 				CauseEffectChainImpl cDiff = CauseEffectChainSingleton.getInstance().getDiffCauseEffectChain();
 				cDiff.setChain(complement);
 
-				if (generateCauseEffectChain(inputFail, c)) {
+				if (generateCauseEffectChain(inputFail, CHALLENGE_FILE, CHALLENGE_NAME)) {
 					cEsReturn.clear();
 					cEsReturn.addAll(complement);
 					n = Math.max(n - 1, 2);
@@ -146,8 +139,6 @@ public class DeltaDebug {
 				}
 			}
 		}
-		
-		
 
 		return result;
 	}
