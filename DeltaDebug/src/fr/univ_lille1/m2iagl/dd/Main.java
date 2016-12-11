@@ -10,7 +10,7 @@ public class Main {
 		try {
 
 			DDebuggerImpl ddebugger = new DDebuggerImpl();
-			Challenge2 challenge = new Challenge2();
+			Challenge3 challenge = new Challenge3();
 			
 			CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
 			cEC.print();

@@ -36,13 +36,8 @@ public class DeltaDebug {
 		CtMethod cChallenge = (CtMethod) foo.getElements(new TypeFilter(CtMethod.class)).get(0);
 
 		// Apply transformations
-		for (Object e : cChallenge.getElements(new TypeFilter(CtAssignment.class))) {
-			e = AssignementProcessor.process(e);
-		}
-
-		for (Object e : cChallenge.getElements(new TypeFilter(CtLocalVariable.class))) {
-			e = VariableProcessor.process(e);
-		}
+		cChallenge = AssignementProcessor.transform(cChallenge);
+		cChallenge = VariableProcessor.transform(cChallenge);
 
 		// Create a new instance
 		Class tCClass = null;
@@ -82,7 +77,7 @@ public class DeltaDebug {
 		System.out.println("\r\n==== Chaine d'execution Input Fail ====");
 		((CauseEffectChainImpl) cECFail).print();
 
-		System.out.println("\r\n==== Chain de débugage ====");
+		System.out.println("\r\n==== Chaine de débogage ====");
 
 		int n = 2;
 
@@ -129,11 +124,14 @@ public class DeltaDebug {
 
 		for (int i = 0; i < a.size(); i++) {
 			for (int j = 0; j < b.size(); j++) {
-				ChainElement aa = a.get(i);
-				ChainElement bb = b.get(j);
+				ChainElementImpl aa = (ChainElementImpl)a.get(i);
+				ChainElementImpl bb = (ChainElementImpl)b.get(j);
 
-				if (aa.getLine().equals(bb.getLine()) && aa.getVariable().equals(bb.getVariable())
-						&& !aa.getDescription().equals(bb.getDescription())) {
+				if (aa.getLine().equals(bb.getLine()) && aa.getVariable().equals(bb.getVariable()) && aa.getIteration() == bb.getIteration()
+						&& aa.getValue() == null && bb.getValue() == null
+						|| (aa.getValue() != null && bb.getValue() != null
+						   && !aa.getValue().equals(bb.getValue()))
+						) {
 					result.add(aa);
 					break;
 				}

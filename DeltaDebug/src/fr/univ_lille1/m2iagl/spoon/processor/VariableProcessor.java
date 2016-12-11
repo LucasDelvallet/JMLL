@@ -20,15 +20,24 @@ import spoon.reflect.code.CtVariableAccess;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtElement;
 import spoon.reflect.declaration.CtExecutable;
+import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.declaration.CtVariable;
 import spoon.reflect.factory.Factory;
 import spoon.reflect.reference.CtExecutableReference;
 import spoon.reflect.reference.CtVariableReference;
+import spoon.reflect.visitor.filter.TypeFilter;
 import spoon.support.reflect.declaration.CtMethodImpl;
 import spoon.support.reflect.reference.CtVariableReferenceImpl;
 
 
 public class VariableProcessor {
+	
+	public static CtMethod transform(CtMethod c) {
+		for (Object e : c.getElements(new TypeFilter(CtLocalVariable.class))) {
+			e = process(e);
+		}
+		return c;
+	}
 	
 	public static Object process(Object e) {
 		CtLocalVariable op = (CtLocalVariable) e;

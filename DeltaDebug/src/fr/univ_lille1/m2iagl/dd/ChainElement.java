@@ -6,5 +6,5 @@ package fr.univ_lille1.m2iagl.dd;
 public interface ChainElement {
 	String getLine();
 	String getVariable();
-	Object getDescription();
+	String getDescription();
 }

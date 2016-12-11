@@ -8,46 +8,85 @@ import java.util.List;
 public class CauseEffectChainImpl implements CauseEffectChain {
 
 	private List<ChainElement> chainElements;
-	
-	public CauseEffectChainImpl(){
+
+	public CauseEffectChainImpl() {
 		this.chainElements = new ArrayList<>();
 	}
-	
-	public CauseEffectChainImpl(List<ChainElement> elements){
+
+	public CauseEffectChainImpl(List<ChainElement> elements) {
 		this.chainElements = elements;
 	}
-	
+
 	public void addElement(ChainElement element) {
 		chainElements.add(element);
 	}
-	
-	public void setChainElementDescription(int index, Object description){
-		((ChainElementImpl)(chainElements.get(index))).setDescription(description);
+
+	public void setChainElementDescription(int index, String description) {
+		((ChainElementImpl) (chainElements.get(index))).setDescription(description);
+	}
+
+	public void setChainElementValue(int line, Object value) {
+		for(int i = 0; i < chainElements.size(); i++){
+			ChainElementImpl ceI = (ChainElementImpl)chainElements.get(i);
+			if(Integer.parseInt(ceI.getLine()) == line){
+				if(ceI.getIteration() == -1){
+					ceI.setValue(value);
+					ceI.setIteration(0);
+					chainElements.set(i, ceI);
+				}else{
+					ChainElementImpl ceINewIteration = new ChainElementImpl(ceI.getLine(), ceI.getVariable(), ceI.getDescription());
+					ceINewIteration.setValue(value);
+					ceINewIteration.setIteration(getLineIterationCount(line)+1);
+					chainElements.add(ceINewIteration);
+					break;
+				}
+			}
+		}
 	}
 	
+	private int getLineIterationCount(int line){
+		int count = 0;
+		for(int i = 0; i < chainElements.size(); i++){
+			ChainElementImpl ceI = (ChainElementImpl)chainElements.get(i);
+			if(Integer.parseInt(ceI.getLine()) == line){
+				count++;
+			}
+		}
+		return count;
+	}
+
 	@Override
 	public List<ChainElement> getChain() {
 		return chainElements;
 	}
-	
-	public void setChain(List<ChainElement> chainElements){
+
+	public void setChain(List<ChainElement> chainElements) {
 		this.chainElements.clear();
 		this.chainElements.addAll(chainElements);
 	}
-	
-	public void print(){
+
+	public void print() {
 		Collections.sort(chainElements, new Comparator<ChainElement>() {
 			public int compare(ChainElement o1, ChainElement o2) {
-				return Integer.parseInt(o1.getLine()) - Integer.parseInt(o2.getLine()) ;
+				return Integer.parseInt(o1.getLine()) - Integer.parseInt(o2.getLine());
 			};
 		});
-		
-		for(ChainElement ce : chainElements){
-			System.out.println("Line : " + ce.getLine() + "     |     Variable name : " + ce.getVariable() + "    |    " + ce.getDescription());
+
+		for (int i = 0; i < chainElements.size(); i++) {
+			ChainElementImpl ce = (ChainElementImpl) chainElements.get(i);
+
+			String iteration = "";
+			if (ce.getIteration() > 0) {
+				iteration = "  Iteration " + ce.getIteration();
+
+			}
+
+			System.out.println("Line : " + ce.getLine() + iteration + "     |     Variable name : " + ce.getVariable()
+					+ "    |    " + ce.getDescription() + ce.getValue());
 		}
 	}
-	
-	public void clearChainElements(){
+
+	public void clearChainElements() {
 		chainElements.clear();
 	}
 
