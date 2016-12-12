@@ -27,7 +27,6 @@ public class DeltaDebug {
 		// Create a TemplateChallenge launcher
 		Launcher l = new Launcher();
 		l.setArgs(new String[] {"-i", challengeFile});
-		l.addInputResource("src/test/resources/");
 		l.buildModel();
 
 		CtClass foo = (CtClass) l.getFactory().Package().getRootPackage()
