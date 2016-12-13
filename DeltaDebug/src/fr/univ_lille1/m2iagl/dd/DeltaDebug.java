@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.mdkt.compiler.InMemoryJavaCompiler;
+import org.omg.CosNaming.IstringHelper;
 
 import fr.univ_lille1.m2iagl.challenge.Challenge;
 import fr.univ_lille1.m2iagl.spoon.processor.AssignementProcessor;
@@ -131,6 +132,7 @@ public class DeltaDebug {
 				ChainElementImpl successElement = (ChainElementImpl)successChain.get(i);
 				ChainElementImpl failElement = (ChainElementImpl)failChain.get(j);
 				
+				/*
 				if ((successElement.getLine().equals(failElement.getLine()) 
 						&& successElement.getVariable().equals(failElement.getVariable()) 
 						&& successElement.getIteration() == failElement.getIteration()
@@ -139,11 +141,35 @@ public class DeltaDebug {
 						   && !successElement.getValue().equals(failElement.getValue()))
 						))) {
 					result.add(failElement);
+				}*/
+				
+				if(isTheSameContextElements(successElement, failElement) && !isTheSameValue(successElement, failElement)) {
+					result.add(failElement);
 				}
 			}
 		}
 
 		return result;
+	}
+	
+	private static boolean isTheSameContextElements(ChainElementImpl e1, ChainElementImpl e2) {
+		return e1.getLine().equals(e2.getLine()) && e1.getVariable().equals(e2.getVariable()) && (e1.getIteration() == e2.getIteration());
+	}
+	
+	private static boolean isTheSameValue(ChainElementImpl e1, ChainElementImpl e2) {
+		if(e1.getValue() == null && e2.getValue() == null) {
+			return true;
+		}
+		
+		if(e1.getValue() == null && e2.getValue() != null) {
+			return false;
+		}
+		
+		if(e1.getValue() != null && e2.getValue() == null) {
+			return false;
+		}
+		
+		return e1.getValue().equals(e2.getValue());
 	}
 
 }
