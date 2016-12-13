@@ -114,28 +114,59 @@ public class DeltaDebug {
 				n = Math.min(n * 2, cEsReturn.size());
 			}
 		}
+		
+		for(int i = 0; i < cECFail.getChain().size(); i++){
+			for(int j = 0; j < cEsReturn.size(); j++){
+				ChainElementImpl ceF = (ChainElementImpl) cECFail.getChain().get(i);
+				ChainElementImpl ceR = (ChainElementImpl) cEsReturn.get(j);
+				if(ceF.getLine().equals(ceR.getLine()) && ceF.getVariable().equals(ceR.getVariable()) && ceF.getIteration() == ceR.getIteration()){
+					ceR.setValue(ceF.getValue());
+					cEsReturn.set(j, ceR);
+				}
+			}
+		}
+		
+		
+		if(((ChainElementImpl)cEsReturn.get(cEsReturn.size()-1)).getIteration() == 0){
+			((ChainElementImpl)cEsReturn.get(cEsReturn.size()-1)).setValue("null");
+		}
+		
+		
 		return new CauseEffectChainImpl(cEsReturn);
 
 	}
 
-	private static List<ChainElement> difference(List<ChainElement> a, List<ChainElement> b) {
+	public static List<ChainElement> difference(List<ChainElement> a, List<ChainElement> b) {
 		List<ChainElement> result = new LinkedList<ChainElement>();
+		
+		List<Integer> li = new ArrayList<Integer>();
 
 		for (int i = 0; i < a.size(); i++) {
 			for (int j = 0; j < b.size(); j++) {
 				ChainElementImpl aa = (ChainElementImpl)a.get(i);
 				ChainElementImpl bb = (ChainElementImpl)b.get(j);
 
-				if (aa.getLine().equals(bb.getLine()) && aa.getVariable().equals(bb.getVariable()) && aa.getIteration() == bb.getIteration()
+				if ((aa.getLine().equals(bb.getLine()) 
+						&& aa.getVariable().equals(bb.getVariable()) 
+						&& aa.getIteration() == bb.getIteration()
 						&& aa.getValue() == null && bb.getValue() == null
 						|| (aa.getValue() != null && bb.getValue() != null
 						   && !aa.getValue().equals(bb.getValue()))
-						) {
-					result.add(aa);
+						)) {
+					li.add(j);
+					//result.add(aa);
 					break;
 				}
 			}
 		}
+		
+		for(int i = 0; i < a.size(); i++){
+			if(!li.contains(i)){
+				result.add(b.get(i));
+			}
+		}
+		
+		
 
 		return result;
 	}
