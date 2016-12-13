@@ -37,7 +37,7 @@ public class DeltaDebugTest {
 		celement1.setValue("1");
 		ChainElementImpl celement2 = new ChainElementImpl("2", "variable2", "description2");
 		celement2.setValue(33);
-		ChainElementImpl celement3 = new ChainElementImpl("3", "variable3", "description3");
+		ChainElementImpl celement3 = new ChainElementImpl("4", "variable4", "description4");
 		celement3.setValue("coucou");
 		ChainElementImpl celement4 = new ChainElementImpl("4", "variable4", "description4");
 		celement4.setValue(42);

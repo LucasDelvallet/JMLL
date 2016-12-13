@@ -1,19 +1,15 @@
 package fr.univ_lille1.m2iagl.dd;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.mdkt.compiler.InMemoryJavaCompiler;
-import org.omg.CosNaming.IstringHelper;
 
 import fr.univ_lille1.m2iagl.challenge.Challenge;
 import fr.univ_lille1.m2iagl.spoon.processor.AssignementProcessor;
 import fr.univ_lille1.m2iagl.spoon.processor.VariableProcessor;
 import fr.univ_lille1.m2iagl.spoon.templatechallenge.ITemplateChallenge;
 import spoon.Launcher;
-import spoon.reflect.code.CtAssignment;
-import spoon.reflect.code.CtLocalVariable;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.visitor.filter.NameFilter;
@@ -39,6 +35,7 @@ public class DeltaDebug {
 		// Apply transformations
 		cChallenge = AssignementProcessor.transform(cChallenge);
 		cChallenge = VariableProcessor.transform(cChallenge);
+		//cChallenge = UnaryOperatorProcessor.transform(cChallenge);
 
 		// Create a new instance
 		Class tCClass = null;
@@ -131,6 +128,9 @@ public class DeltaDebug {
 			for (int j = 0; j < failChain.size(); j++) {
 				ChainElementImpl successElement = (ChainElementImpl)successChain.get(i);
 				ChainElementImpl failElement = (ChainElementImpl)failChain.get(j);
+				if(failElement.getIteration() == -1){
+					failElement.setIteration(0);
+				}
 				
 				/*
 				if ((successElement.getLine().equals(failElement.getLine()) 
@@ -142,6 +142,7 @@ public class DeltaDebug {
 						))) {
 					result.add(failElement);
 				}*/
+				
 				boolean isLastFailElement = (j == (failChain.size() - 1));
 				if(isTheSameContextElements(successElement, failElement, isLastFailElement) && !isTheSameValue(successElement, failElement, isLastFailElement)) {
 					result.add(failElement);
@@ -156,7 +157,7 @@ public class DeltaDebug {
 		boolean iterationCheck;
 		
 		if(isLastFailElement) {
-			iterationCheck = (failChain.getIteration() == successChain.getIteration()) || (failChain.getIteration() == (successChain.getIteration() - 1));
+			iterationCheck = (failChain.getIteration() == successChain.getIteration()) || failChain.getIteration() == (successChain.getIteration() - 1) || ((failChain.getIteration() - 1) == successChain.getIteration());
 		} else {
 			iterationCheck = failChain.getIteration() == successChain.getIteration();
 		}
