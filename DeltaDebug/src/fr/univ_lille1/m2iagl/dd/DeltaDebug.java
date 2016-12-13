@@ -128,30 +128,20 @@ public class DeltaDebug {
 
 		for (int i = 0; i < successChain.size(); i++) {
 			for (int j = 0; j < failChain.size(); j++) {
-				ChainElementImpl aa = (ChainElementImpl)successChain.get(i);
-				ChainElementImpl bb = (ChainElementImpl)failChain.get(j);
-
-				if ((aa.getLine().equals(bb.getLine()) 
-						&& aa.getVariable().equals(bb.getVariable()) 
-						&& aa.getIteration() == bb.getIteration()
-						&& aa.getValue() == null && bb.getValue() == null
-						|| (aa.getValue() != null && bb.getValue() != null
-						   && !aa.getValue().equals(bb.getValue()))
-						)) {
-					li.add(j);
-					//result.add(aa);
-					break;
+				ChainElementImpl successElement = (ChainElementImpl)successChain.get(i);
+				ChainElementImpl failElement = (ChainElementImpl)failChain.get(j);
+				
+				if ((successElement.getLine().equals(failElement.getLine()) 
+						&& successElement.getVariable().equals(failElement.getVariable()) 
+						&& successElement.getIteration() == failElement.getIteration()
+						&& ((successElement.getValue() == null && failElement.getValue() == null)
+						|| (successElement.getValue() != null && failElement.getValue() != null
+						   && !successElement.getValue().equals(failElement.getValue()))
+						))) {
+					result.add(failElement);
 				}
 			}
 		}
-		
-		for(int i = 0; i < failChain.size(); i++){
-			if(!li.contains(i)){
-				result.add(failChain.get(i));
-			}
-		}
-		
-		
 
 		return result;
 	}
