@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import fr.univ_lille1.m2iagl.dd.Challenge;
 import bsh.EvalError;
 import bsh.Interpreter;
 
@@ -37,11 +36,10 @@ public class Challenge2 implements Challenge<Integer> {
 	@Override
 	public void challenge(Integer input) {
 		  int j = 5;
-		  input = input + 2;
+		  input = input + 2;  //
 		  input = input - j;
-		  int k = input * 2;
-		  
-		  int result = j / k;
+		  int k = input * 2;  //
+		  int result = j / k; //
 	} 
 
 	@Override

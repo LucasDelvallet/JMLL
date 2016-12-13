@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import fr.univ_lille1.m2iagl.dd.Challenge;
 import bsh.EvalError;
 import bsh.Interpreter;
 

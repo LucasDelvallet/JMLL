@@ -29,7 +29,6 @@ public class AssignementProcessorTest {
 		  CtMethod cfoo =  (CtMethod) foo.getElements(new TypeFilter(CtMethod.class)).get(0);
 		  
 		  Class<?> fooClass = InMemoryJavaCompiler.compile(foo.getQualifiedName(), "package "+foo.getPackage().getQualifiedName()+";"+foo.toString());
-		  IFoo x = (IFoo) fooClass.newInstance();
 		  
 		  
 		  assertEquals(0, cfoo.getElements(new Filter<CtInvocation<?>>() {

@@ -10,6 +10,7 @@ import java.util.List;
 
 import bsh.EvalError;
 import bsh.Interpreter;
+import fr.univ_lille1.m2iagl.challenge.Challenge;
 
 public class DDebuggerImpl<T> implements DDebugger<T> {
 
