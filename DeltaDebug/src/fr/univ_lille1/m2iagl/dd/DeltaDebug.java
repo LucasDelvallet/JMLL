@@ -134,8 +134,8 @@ public class DeltaDebug {
 				if ((successElement.getLine().equals(failElement.getLine()) 
 						&& successElement.getVariable().equals(failElement.getVariable()) 
 						&& successElement.getIteration() == failElement.getIteration()
-						&& ((successElement.getValue() == null && failElement.getValue() == null)
-						|| (successElement.getValue() != null && failElement.getValue() != null
+						&& (!(successElement.getValue() == null && failElement.getValue() == null)
+						|| !(successElement.getValue() != null && failElement.getValue() != null
 						   && !successElement.getValue().equals(failElement.getValue()))
 						))) {
 					result.add(failElement);

@@ -54,5 +54,38 @@ public class DeltaDebugTest {
 		assertEquals(1, cDiff.size());
 		assertEquals(celement4, cDiff.get(0));
 	}
+	
+	@Test
+	public void NullValuesShouldNotBeDifferents(){
+		ChainElementImpl successChainElement = new ChainElementImpl("val", "variable", "description");
+		ChainElementImpl failChainElement = new ChainElementImpl("val", "variable", "description");	
+		
+		CauseEffectChainImpl ce1 = new CauseEffectChainImpl();
+		ce1.addElement(successChainElement);
+		
+		CauseEffectChainImpl ce2 = new CauseEffectChainImpl();
+		ce2.addElement(failChainElement);
+		List<ChainElement> cDiff = DeltaDebug.difference(ce1.getChain(), ce2.getChain());
+		
+		assertEquals(0, cDiff.size());
+	}
+	
+	@Test
+	public void differenceBetweenNullAndValueShouldBeDetected(){
+		ChainElementImpl successChainElement = new ChainElementImpl("val", "variable", "description");
+		successChainElement.setValue(new Integer(1));
+		ChainElementImpl failChainElement = new ChainElementImpl("val", "variable", "description");
+		failChainElement.setValue(null);
+		
+		CauseEffectChainImpl ce1 = new CauseEffectChainImpl();
+		ce1.addElement(successChainElement);
+		
+		CauseEffectChainImpl ce2 = new CauseEffectChainImpl();
+		ce2.addElement(failChainElement);
+		List<ChainElement> cDiff = DeltaDebug.difference(ce1.getChain(), ce2.getChain());
+		
+		assertEquals(1, cDiff.size());
+		assertEquals(failChainElement, cDiff.get(0));
+	}
 
 }
