@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import fr.univ_lille1.m2iagl.dd.CauseEffectChainImpl;
 import fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton;
+import fr.univ_lille1.m2iagl.dd.ChainElement;
 import fr.univ_lille1.m2iagl.dd.ChainElementImpl;
 import spoon.Launcher;
 import spoon.processing.AbstractProcessor;
@@ -44,6 +46,16 @@ public class VariableProcessor {
 
 		Launcher spoon = new Launcher();
 		Factory factory = spoon.createFactory();
+		
+		int line = op.getPosition().getLine() - 3;
+		CauseEffectChainImpl cDiff = CauseEffectChainSingleton.getInstance().getDiffCauseEffectChain();
+		for (ChainElement c : cDiff.getChain()) {
+			if (Integer.parseInt(c.getLine()) == line) {
+				op.setDefaultExpression(factory.Core().createLiteral().setValue(((ChainElementImpl)c).getValue()));
+			}
+		}
+		
+		
 		List<CtExpression<?>> argsL = new ArrayList<CtExpression<?>>();
 		argsL.add(op.getDefaultExpression());
 		CtInvocation a = factory.Core().createInvocation().setArguments(argsL);
@@ -60,7 +72,7 @@ public class VariableProcessor {
 		}
 		
 		ChainElementImpl ce = new ChainElementImpl(String.valueOf(op.getPosition().getLine() - 3),
-				op.getSimpleName().toString(), "");
+				op.getSimpleName().toString(), "Declaration");
 		CauseEffectChainSingleton.getInstance().getCauseEffectChain().addElement(ce);
 		return op;
 	}

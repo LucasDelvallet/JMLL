@@ -9,6 +9,7 @@ import org.omg.CosNaming.IstringHelper;
 
 import fr.univ_lille1.m2iagl.challenge.Challenge;
 import fr.univ_lille1.m2iagl.spoon.processor.AssignementProcessor;
+import fr.univ_lille1.m2iagl.spoon.processor.UnaryOperatorProcessor;
 import fr.univ_lille1.m2iagl.spoon.processor.VariableProcessor;
 import fr.univ_lille1.m2iagl.spoon.templatechallenge.ITemplateChallenge;
 import spoon.Launcher;
@@ -39,6 +40,7 @@ public class DeltaDebug {
 		// Apply transformations
 		cChallenge = AssignementProcessor.transform(cChallenge);
 		cChallenge = VariableProcessor.transform(cChallenge);
+		//cChallenge = UnaryOperatorProcessor.transform(cChallenge);
 
 		// Create a new instance
 		Class tCClass = null;
@@ -131,6 +133,9 @@ public class DeltaDebug {
 			for (int j = 0; j < failChain.size(); j++) {
 				ChainElementImpl successElement = (ChainElementImpl)successChain.get(i);
 				ChainElementImpl failElement = (ChainElementImpl)failChain.get(j);
+				if(failElement.getIteration() == -1){
+					failElement.setIteration(0);
+				}
 				
 				/*
 				if ((successElement.getLine().equals(failElement.getLine()) 
@@ -153,7 +158,7 @@ public class DeltaDebug {
 	}
 	
 	private static boolean isTheSameContextElements(ChainElementImpl e1, ChainElementImpl e2) {
-		return e1.getLine().equals(e2.getLine()) && e1.getVariable().equals(e2.getVariable()) && (e1.getIteration() == e2.getIteration());
+		return e1.getLine().equals(e2.getLine()) && e1.getVariable().equals(e2.getVariable()) && (e1.getIteration() == e2.getIteration()) && (e1.getDescription().equals(e2.getDescription()));
 	}
 	
 	private static boolean isTheSameValue(ChainElementImpl e1, ChainElementImpl e2) {

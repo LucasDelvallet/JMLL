@@ -78,11 +78,10 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 			String iteration = "";
 			if (ce.getIteration() > 0) {
 				iteration = "  Iteration " + ce.getIteration();
-
 			}
 
 			System.out.println("Line : " + ce.getLine() + iteration + "     |     Variable name : " + ce.getVariable()
-					+ "    |    " + ce.getDescription() + ce.getValue());
+					+ "    |    " + ce.getDescription() + "  |  Value : " +ce.getValue());
 		}
 	}
 

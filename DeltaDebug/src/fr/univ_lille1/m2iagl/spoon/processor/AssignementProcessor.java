@@ -59,7 +59,7 @@ public class AssignementProcessor {
 			}
 		}
 
-		ChainElementImpl ce = new ChainElementImpl(String.valueOf(line), op.getAssigned().toString(), "");
+		ChainElementImpl ce = new ChainElementImpl(String.valueOf(line), op.getAssigned().toString(), "Assignement");
 		CauseEffectChainSingleton.getInstance().getCauseEffectChain().addElement(ce);
 
 		return op;
