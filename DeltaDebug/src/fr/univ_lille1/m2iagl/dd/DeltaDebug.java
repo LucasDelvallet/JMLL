@@ -142,8 +142,8 @@ public class DeltaDebug {
 						))) {
 					result.add(failElement);
 				}*/
-				
-				if(isTheSameContextElements(successElement, failElement) && !isTheSameValue(successElement, failElement)) {
+				boolean isLastFailElement = (j == (failChain.size() - 1));
+				if(isTheSameContextElements(successElement, failElement, isLastFailElement) && !isTheSameValue(successElement, failElement, isLastFailElement)) {
 					result.add(failElement);
 				}
 			}
@@ -152,24 +152,31 @@ public class DeltaDebug {
 		return result;
 	}
 	
-	private static boolean isTheSameContextElements(ChainElementImpl e1, ChainElementImpl e2) {
-		return e1.getLine().equals(e2.getLine()) && e1.getVariable().equals(e2.getVariable()) && (e1.getIteration() == e2.getIteration());
+	private static boolean isTheSameContextElements(ChainElementImpl successChain, ChainElementImpl failChain, boolean isLastFailElement) {
+		boolean iterationCheck;
+		
+		if(isLastFailElement) {
+			iterationCheck = (failChain.getIteration() == successChain.getIteration()) || (failChain.getIteration() == (successChain.getIteration() - 1));
+		} else {
+			iterationCheck = failChain.getIteration() == successChain.getIteration();
+		}
+		return successChain.getLine().equals(failChain.getLine()) && successChain.getVariable().equals(failChain.getVariable()) && iterationCheck;
 	}
 	
-	private static boolean isTheSameValue(ChainElementImpl e1, ChainElementImpl e2) {
-		if(e1.getValue() == null && e2.getValue() == null) {
+	private static boolean isTheSameValue(ChainElementImpl successChain, ChainElementImpl failChain, boolean isLastFailElement) {		
+		if(successChain.getValue() == null && failChain.getValue() == null) {
 			return true;
 		}
 		
-		if(e1.getValue() == null && e2.getValue() != null) {
+		if(successChain.getValue() == null && failChain.getValue() != null) {
 			return false;
 		}
 		
-		if(e1.getValue() != null && e2.getValue() == null) {
+		if(successChain.getValue() != null && failChain.getValue() == null) {
 			return false;
 		}
 		
-		return e1.getValue().equals(e2.getValue());
+		return successChain.getValue().equals(failChain.getValue());
 	}
 
 }

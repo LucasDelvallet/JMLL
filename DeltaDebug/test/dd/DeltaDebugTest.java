@@ -34,22 +34,26 @@ public class DeltaDebugTest {
 	@Test
 	public void difference_test(){
 		ChainElementImpl celement1 = new ChainElementImpl("1", "variable1", "description1");
+		celement1.setValue("1");
 		ChainElementImpl celement2 = new ChainElementImpl("2", "variable2", "description2");
+		celement2.setValue(33);
 		ChainElementImpl celement3 = new ChainElementImpl("3", "variable3", "description3");
+		celement3.setValue("coucou");
 		ChainElementImpl celement4 = new ChainElementImpl("4", "variable4", "description4");
+		celement4.setValue(42);
 		
 		
-		CauseEffectChainImpl ce1 = new CauseEffectChainImpl();
-		ce1.addElement(celement1);
-		ce1.addElement(celement2);
-		ce1.addElement(celement3);	
+		CauseEffectChainImpl successCauseEffect = new CauseEffectChainImpl();
+		successCauseEffect.addElement(celement1);
+		successCauseEffect.addElement(celement2);
+		successCauseEffect.addElement(celement3);	
 		
-		CauseEffectChainImpl ce2 = new CauseEffectChainImpl();
-		ce2.addElement(celement1);
-		ce2.addElement(celement2);
-		ce2.addElement(celement4);
+		CauseEffectChainImpl failCauseEffect = new CauseEffectChainImpl();
+		failCauseEffect.addElement(celement1);
+		failCauseEffect.addElement(celement2);
+		failCauseEffect.addElement(celement4);
 		
-		List<ChainElement> cDiff = DeltaDebug.difference(ce1.getChain(), ce2.getChain());
+		List<ChainElement> cDiff = DeltaDebug.difference(successCauseEffect.getChain(), failCauseEffect.getChain());
 		
 		assertEquals(1, cDiff.size());
 		assertEquals(celement4, cDiff.get(0));
@@ -60,12 +64,12 @@ public class DeltaDebugTest {
 		ChainElementImpl successChainElement = new ChainElementImpl("val", "variable", "description");
 		ChainElementImpl failChainElement = new ChainElementImpl("val", "variable", "description");	
 		
-		CauseEffectChainImpl ce1 = new CauseEffectChainImpl();
-		ce1.addElement(successChainElement);
+		CauseEffectChainImpl successCauseEffectChain = new CauseEffectChainImpl();
+		successCauseEffectChain.addElement(successChainElement);
 		
-		CauseEffectChainImpl ce2 = new CauseEffectChainImpl();
-		ce2.addElement(failChainElement);
-		List<ChainElement> cDiff = DeltaDebug.difference(ce1.getChain(), ce2.getChain());
+		CauseEffectChainImpl failCauseEffectChaon = new CauseEffectChainImpl();
+		failCauseEffectChaon.addElement(failChainElement);
+		List<ChainElement> cDiff = DeltaDebug.difference(successCauseEffectChain.getChain(), failCauseEffectChaon.getChain());
 		
 		assertEquals(0, cDiff.size());
 	}
@@ -86,6 +90,27 @@ public class DeltaDebugTest {
 		
 		assertEquals(1, cDiff.size());
 		assertEquals(failChainElement, cDiff.get(0));
+	}
+	
+	/**
+	 * This is a bug which appear when the last failChainElement is not call, so it Iterator 
+	 * Index is at -1, but the success is set to 0. But in this case the difference should 
+	 * not exclude this failElement
+	 */
+	@Test
+	public void whenAChainElementIsNotCalledIterationShouldNotBeConsidered(){
+		ChainElementImpl successChainElement = new ChainElementImpl("1", "variable", "description");
+		successChainElement.setIteration(0);
+		ChainElementImpl failChainElement = new ChainElementImpl("1", "variable", "description");
+		
+		CauseEffectChainImpl ce1 = new CauseEffectChainImpl();
+		ce1.addElement(successChainElement);
+		
+		CauseEffectChainImpl ce2 = new CauseEffectChainImpl();
+		ce2.addElement(failChainElement);
+		List<ChainElement> cDiff = DeltaDebug.difference(ce1.getChain(), ce2.getChain());
+		
+		assertEquals(0, cDiff.size());
 	}
 
 }
