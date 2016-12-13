@@ -35,7 +35,7 @@ public class AssignementProcessor {
 		Launcher spoon = new Launcher();
 		Factory factory = spoon.createFactory();
 
-		int line = op.getPosition().getLine() - 2;
+		int line = op.getPosition().getLine() - 3;
 		CauseEffectChainImpl cDiff = CauseEffectChainSingleton.getInstance().getDiffCauseEffectChain();
 		for (ChainElement c : cDiff.getChain()) {
 			if (Integer.parseInt(c.getLine()) == line) {

@@ -59,7 +59,7 @@ public class VariableProcessor {
 			}
 		}
 		
-		ChainElementImpl ce = new ChainElementImpl(String.valueOf(op.getPosition().getLine() - 2),
+		ChainElementImpl ce = new ChainElementImpl(String.valueOf(op.getPosition().getLine() - 3),
 				op.getSimpleName().toString(), "");
 		CauseEffectChainSingleton.getInstance().getCauseEffectChain().addElement(ce);
 		return op;

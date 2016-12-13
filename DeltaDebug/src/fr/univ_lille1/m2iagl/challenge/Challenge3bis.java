@@ -45,22 +45,4 @@ public class Challenge3bis implements Challenge<String> {
 		}while(i != 5);
 	}
 
-	@Override
-	public String getJavaProgram() {
-		String program = String.join("\n"
-				 ,"public void challenge(String input){"
-				 ,"int i = 0;"
-				 ,"input = input.toLowerCase();"
-				 ,"String retour = \"\";"
-				 ,"do{"
-				 ,"retour = retour + input.substring(i, i+1);"
-				 ,"i++;"
-				 ,"}while(i != 5);"
-				 
-		         ,"}"
-		);
-		
-		return program;
-	}
-
 }

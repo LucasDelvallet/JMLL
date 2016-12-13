@@ -17,8 +17,4 @@ public interface Challenge<I> {
 
 	/** the core challenge */
 	public void challenge(I input);
-
-	/** contains the implementation of method challenge. a problem (eg crash) is always signaled by a Throwable exception (.
-	 * Starts by public void challenge. */
-	public String getJavaProgram();
 }

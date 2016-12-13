@@ -43,21 +43,4 @@ public class Challenge3 implements Challenge<String> {
 		}
 	}
 
-	@Override
-	public String getJavaProgram() {
-		String program = String.join("\n"
-				 ,"public void challenge(String input){"
-				 ,"int i = 5;"
-				 ,"input = input.toLowerCase();"
-				 ,"String retour = \"\";"
-				 ,"for (int j = 0; j < i; j++) {"
-				 ,"retour = retour + input.substring(j, j + 1);"
-				 ,"}"
-				 
-		         ,"}"
-		);
-		
-		return program;
-	}
-
 }

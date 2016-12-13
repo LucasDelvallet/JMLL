@@ -36,26 +36,9 @@ public class Challenge2 implements Challenge<Integer> {
 	@Override
 	public void challenge(Integer input) {
 		  int j = 5;
-		  input = input + 2;  //
+		  input = input + 2; 
 		  input = input - j;
-		  int k = input * 2;  //
-		  int result = j / k; //
+		  int k = input * 2;
+		  int result = j / k;
 	} 
-
-	@Override
-	public String getJavaProgram() {
-		String program = String.join("\n"
-				 ,"public void challenge(Integer input){"
-				 ,"int j = 5;"
-				 ,"input = input + 2;"
-				 ,"input = input - j;"
-				 ,"int k = input * 2;"
-				  
-				 ,"int result = j / k;"
-		         ,"}"
-		);
-		
-		return program;
-	}
-
 }

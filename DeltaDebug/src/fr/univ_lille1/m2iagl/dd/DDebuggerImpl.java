@@ -11,6 +11,7 @@ import java.util.List;
 import bsh.EvalError;
 import bsh.Interpreter;
 import fr.univ_lille1.m2iagl.challenge.Challenge;
+import fr.univ_lille1.m2iagl.spoon.processor.ChallengeProcessor;
 
 public class DDebuggerImpl<T> implements DDebugger<T> {
 
@@ -39,26 +40,8 @@ public class DDebuggerImpl<T> implements DDebugger<T> {
 
 	public void writeChallenge(Challenge<T> c){
 		try {
-			List<String> lines = new ArrayList<String>();
-			lines.add("package fr.univ_lille1.m2iagl.spoon.templatechallenge;");
-			lines.add("import fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton;");
-			lines.add("public class TemplateChallenge implements fr.univ_lille1.m2iagl.spoon.templatechallenge.ITemplateChallenge<"+c.getInputFormat().getSimpleName()+">{");
-			lines.add("@Override");
-			lines.add(c.getJavaProgram());
-			lines.add("");
-			lines.add("public <T> T debug(T input){");
-			lines.add("int line = Thread.currentThread().getStackTrace()[2].getLineNumber();");
-		    lines.add("java.util.List<fr.univ_lille1.m2iagl.dd.ChainElement> cs = fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton.getInstance().getCauseEffectChain().getChain();");
-			//lines.add("for(int i = 0; i < cs.size(); i++){");
-			//lines.add("if(Integer.parseInt(cs.get(i).getLine()) == line){");
-			lines.add("fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton.getInstance().getCauseEffectChain().setChainElementValue(line, input);");
-			//lines.add("}");
-			//lines.add("}");
-		    lines.add("return input;");
-			lines.add("}");
-			lines.add("}");
-
-			Files.write(Paths.get("src/fr/univ_lille1/m2iagl/spoon/templatechallenge/TemplateChallenge.java"), lines, Charset.defaultCharset());
+			List<String> challenge = ChallengeProcessor.getChallengeAsString(c);
+			Files.write(Paths.get("src/fr/univ_lille1/m2iagl/spoon/templatechallenge/TemplateChallenge.java"), challenge , Charset.defaultCharset());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
