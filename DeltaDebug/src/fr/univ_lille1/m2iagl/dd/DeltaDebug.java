@@ -7,6 +7,7 @@ import org.mdkt.compiler.InMemoryJavaCompiler;
 
 import fr.univ_lille1.m2iagl.challenge.Challenge;
 import fr.univ_lille1.m2iagl.spoon.processor.AssignementProcessor;
+import fr.univ_lille1.m2iagl.spoon.processor.UnaryOperatorProcessor;
 import fr.univ_lille1.m2iagl.spoon.processor.VariableProcessor;
 import fr.univ_lille1.m2iagl.spoon.templatechallenge.ITemplateChallenge;
 import spoon.Launcher;
@@ -35,7 +36,7 @@ public class DeltaDebug {
 		// Apply transformations
 		cChallenge = AssignementProcessor.transform(cChallenge);
 		cChallenge = VariableProcessor.transform(cChallenge);
-		//cChallenge = UnaryOperatorProcessor.transform(cChallenge);
+		cChallenge = UnaryOperatorProcessor.transform(cChallenge);
 
 		// Create a new instance
 		Class tCClass = null;
@@ -48,6 +49,9 @@ public class DeltaDebug {
 			e1.printStackTrace();
 		}
 
+
+		CauseEffectChainSingleton.getInstance().getCauseEffectChain().sort();
+		
 		// Run to check success
 		boolean hasSucceded = true;
 		try {

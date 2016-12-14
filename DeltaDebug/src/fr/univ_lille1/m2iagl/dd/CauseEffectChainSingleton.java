@@ -1,5 +1,8 @@
 package fr.univ_lille1.m2iagl.dd;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 public class CauseEffectChainSingleton {
 	private static CauseEffectChainSingleton instance;
 	
@@ -22,7 +25,6 @@ public class CauseEffectChainSingleton {
 		if(causeEffectChain == null) {
 			causeEffectChain = new CauseEffectChainImpl();
 		}
-		
 		return causeEffectChain;
 	}
 	
@@ -36,7 +38,6 @@ public class CauseEffectChainSingleton {
 		if(successCauseEffectChain == null) {
 			successCauseEffectChain = new CauseEffectChainImpl();
 		}
-		
 		return successCauseEffectChain;
 	}
 	
@@ -50,7 +51,6 @@ public class CauseEffectChainSingleton {
 		if(failCauseEffectChain == null) {
 			failCauseEffectChain = new CauseEffectChainImpl();
 		}
-		
 		return failCauseEffectChain;
 	}
 	
@@ -64,7 +64,6 @@ public class CauseEffectChainSingleton {
 		if(diffCauseEffectChain == null) {
 			diffCauseEffectChain = new CauseEffectChainImpl();
 		}
-		
 		return diffCauseEffectChain;
 	}
 	
@@ -72,6 +71,14 @@ public class CauseEffectChainSingleton {
 		if(diffCauseEffectChain != null) {
 			diffCauseEffectChain.clearChainElements();
 		}
+	}
+	
+	public void sortCauseEffectChain(CauseEffectChainImpl causeEffect){
+		Collections.sort(causeEffect.getChain(), new Comparator<ChainElement>() {
+			public int compare(ChainElement o1, ChainElement o2) {
+				return Integer.parseInt(o1.getLine()) - Integer.parseInt(o2.getLine());
+			};
+		});
 	}
 
 }

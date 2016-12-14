@@ -43,10 +43,10 @@ public class ChallengeProcessor {
 		lines.add(process(c.getClass().getSimpleName()));
 		
 		lines.add("");
-		lines.add("public <T> T debug(T input){");
+		lines.add("public <T> T debug(T input, String type){");
 		lines.add("int line = Thread.currentThread().getStackTrace()[2].getLineNumber();");
 	    lines.add("java.util.List<fr.univ_lille1.m2iagl.dd.ChainElement> cs = fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton.getInstance().getCauseEffectChain().getChain();");
-		lines.add("fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton.getInstance().getCauseEffectChain().setChainElementValue(line, input);");
+		lines.add("fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton.getInstance().getCauseEffectChain().setChainElementValue(line, input, type);");
 	    lines.add("return input;");
 		lines.add("}");
 		lines.add("}");

@@ -58,6 +58,9 @@ public class VariableProcessor {
 		
 		List<CtExpression<?>> argsL = new ArrayList<CtExpression<?>>();
 		argsL.add(op.getDefaultExpression());
+		argsL.add(factory.Core().createLiteral().setValue("Declaration"));
+		
+		
 		CtInvocation a = factory.Core().createInvocation().setArguments(argsL);
 		Collection<CtExecutableReference<?>> allExecutables = op.getParent(CtExecutable.class)
 				.getParent(CtClass.class).getAllMethods();
