@@ -25,7 +25,7 @@ public class Challenge3ter implements Challenge<String> {
 	@Override
 	public Object doIt(String input) {
 		int i = 5;
-		input = input.toLowerCase();
+		
 		String retour = "";
 		for (int j = 0; j < i; j++) {
 			for (int k = 0; k < 2; k++) {
@@ -38,7 +38,7 @@ public class Challenge3ter implements Challenge<String> {
 	@Override
 	public void challenge(String input) {
 		int i = 5;
-		input = input.toLowerCase();
+		
 		String retour = "";
 		for (int j = 0; j < i; j++) {
 			for (int k = 0; k < 2; k++) {

@@ -7,6 +7,7 @@ import org.mdkt.compiler.InMemoryJavaCompiler;
 
 import fr.univ_lille1.m2iagl.challenge.Challenge;
 import fr.univ_lille1.m2iagl.spoon.processor.AssignementProcessor;
+import fr.univ_lille1.m2iagl.spoon.processor.IfProcessor;
 import fr.univ_lille1.m2iagl.spoon.processor.UnaryOperatorProcessor;
 import fr.univ_lille1.m2iagl.spoon.processor.VariableProcessor;
 import fr.univ_lille1.m2iagl.spoon.templatechallenge.ITemplateChallenge;
@@ -37,7 +38,8 @@ public class DeltaDebug {
 		cChallenge = AssignementProcessor.transform(cChallenge);
 		cChallenge = VariableProcessor.transform(cChallenge);
 		cChallenge = UnaryOperatorProcessor.transform(cChallenge);
-
+		cChallenge = IfProcessor.transform(cChallenge);
+		
 		// Create a new instance
 		Class tCClass = null;
 		ITemplateChallenge tC = null;
@@ -59,6 +61,8 @@ public class DeltaDebug {
 		} catch (Exception e1) {
 			hasSucceded = false;
 		}
+		
+		CauseEffectChainSingleton.getInstance().getCauseEffectChain().removeUniteratedLine();
 
 		return hasSucceded;
 	}
@@ -67,10 +71,15 @@ public class DeltaDebug {
 		CauseEffectChainImpl cECFail = new CauseEffectChainImpl();
 		CauseEffectChainImpl cECSuccess = new CauseEffectChainImpl();
 
+		
+		
 		generateCauseEffectChain(inputFail, CHALLENGE_FILE, CHALLENGE_NAME);
 		cECFail.setChain(CauseEffectChainSingleton.getInstance().getCauseEffectChain().getChain());
+		CauseEffectChainSingleton.getInstance().getFailCauseEffectChain().setChain(cECFail.getChain());
 		generateCauseEffectChain(inputSuccess, CHALLENGE_FILE, CHALLENGE_NAME);
 		cECSuccess.setChain(CauseEffectChainSingleton.getInstance().getCauseEffectChain().getChain());
+		CauseEffectChainSingleton.getInstance().getSuccessCauseEffectChain().setChain(cECSuccess.getChain());
+		
 		List<ChainElement> cEsReturn = null;
 
 		System.out.println("==== Chaine d'execution Input Success ====");
@@ -78,6 +87,7 @@ public class DeltaDebug {
 
 		System.out.println("\r\n==== Chaine d'execution Input Fail ====");
 		((CauseEffectChainImpl) cECFail).print();
+		System.out.println("Then, it crashed.");
 
 		System.out.println("\r\n==== Chaine de débogage ====");
 
@@ -92,13 +102,16 @@ public class DeltaDebug {
 			while (start < cEsReturn.size()) {
 				List<ChainElement> complement = new ArrayList<ChainElement>();
 				complement.addAll(cEsReturn.subList(0, start));
-				complement.addAll(cEsReturn.subList(start + subset_lenght, cEsReturn.size()));
+				if(start + subset_lenght < cEsReturn.size()){
+					complement.addAll(cEsReturn.subList(start + subset_lenght, cEsReturn.size()));
+				}
+				
 
 				CauseEffectChainSingleton.getInstance().getDiffCauseEffectChain().clearChainElements();
 				CauseEffectChainImpl cDiff = CauseEffectChainSingleton.getInstance().getDiffCauseEffectChain();
 				cDiff.setChain(complement);
 
-				if (generateCauseEffectChain(inputFail, CHALLENGE_FILE, CHALLENGE_NAME)) {
+				if (!generateCauseEffectChain(inputFail, CHALLENGE_FILE, CHALLENGE_NAME)) {
 					cEsReturn.clear();
 					cEsReturn.addAll(complement);
 					n = Math.max(n - 1, 2);
@@ -132,9 +145,9 @@ public class DeltaDebug {
 			for (int j = 0; j < failChain.size(); j++) {
 				ChainElementImpl successElement = (ChainElementImpl)successChain.get(i);
 				ChainElementImpl failElement = (ChainElementImpl)failChain.get(j);
-				if(failElement.getIteration() == -1){
-					failElement.setIteration(0);
-				}
+				//if(failElement.getIteration() == -1){
+				//	failElement.setIteration(0);
+				//}
 				
 				boolean isLastFailElement = (j == (failChain.size() - 1));
 				if(isTheSameContextElements(successElement, failElement, isLastFailElement) && !isTheSameValue(successElement, failElement, isLastFailElement)) {

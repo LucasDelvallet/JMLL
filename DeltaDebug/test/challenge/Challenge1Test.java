@@ -52,7 +52,7 @@ public class Challenge1Test {
 		Challenge challenge = new Challenge1();			
 		CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
 		
-		assertEquals(4, cEC.getChain().size());
+		assertEquals(3, cEC.getChain().size());
 		
 		assertEquals("Assignement", cEC.getChain().get(0).getDescription());
 		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(0)).getIteration());
@@ -71,13 +71,6 @@ public class Challenge1Test {
 		assertEquals("7", ((ChainElementImpl)cEC.getChain().get(2)).getLine());
 		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(2)).getValue());
 		assertEquals("input", ((ChainElementImpl)cEC.getChain().get(2)).getVariable());
-
-		assertEquals("Declaration", cEC.getChain().get(3).getDescription());
-		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(3)).getIteration());
-		assertEquals("8", ((ChainElementImpl)cEC.getChain().get(3)).getLine());
-		assertEquals(null, ((ChainElementImpl)cEC.getChain().get(3)).getValue());
-		assertEquals("result", ((ChainElementImpl)cEC.getChain().get(3)).getVariable());
-		// TODO Multiple tests
 	}
 	
 }

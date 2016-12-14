@@ -90,4 +90,13 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 			};
 		});
 	}
+	
+	public void removeUniteratedLine(){
+		for (int i = 0; i < chainElements.size(); i++) {
+			if(((ChainElementImpl)chainElements.get(i)).getIteration() == -1){
+				chainElements.remove(i);
+				i--;
+			}
+		}
+	}
 }

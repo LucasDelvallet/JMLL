@@ -25,7 +25,7 @@ public class Challenge3 implements Challenge<String> {
 	@Override
 	public Object doIt(String input) {
 		int i = 5;
-		input = input.toLowerCase();
+		
 		String retour = "";
 		for (int j = 0; j < i; j++) {
 			retour = retour + input.substring(j, j + 1);
@@ -36,7 +36,7 @@ public class Challenge3 implements Challenge<String> {
 	@Override
 	public void challenge(String input) {
 		int i = 5;
-		input = input.toLowerCase();
+		
 		String retour = "";
 		for (int j = 0; j < i; j++) {
 			retour = retour + input.substring(j, j + 1);
