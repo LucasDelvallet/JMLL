@@ -132,17 +132,6 @@ public class DeltaDebug {
 					failElement.setIteration(0);
 				}
 				
-				/*
-				if ((successElement.getLine().equals(failElement.getLine()) 
-						&& successElement.getVariable().equals(failElement.getVariable()) 
-						&& successElement.getIteration() == failElement.getIteration()
-						&& (!(successElement.getValue() == null && failElement.getValue() == null)
-						|| !(successElement.getValue() != null && failElement.getValue() != null
-						   && !successElement.getValue().equals(failElement.getValue()))
-						))) {
-					result.add(failElement);
-				}*/
-				
 				boolean isLastFailElement = (j == (failChain.size() - 1));
 				if(isTheSameContextElements(successElement, failElement, isLastFailElement) && !isTheSameValue(successElement, failElement, isLastFailElement)) {
 					result.add(failElement);

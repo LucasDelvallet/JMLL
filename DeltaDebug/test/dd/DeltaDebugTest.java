@@ -32,7 +32,7 @@ public class DeltaDebugTest {
 	}
 	
 	@Test
-	public void difference_test(){
+	public void shouldHaveADifference(){
 		ChainElementImpl celement1 = new ChainElementImpl("1", "variable1", "description1");
 		celement1.setValue("1");
 		ChainElementImpl celement2 = new ChainElementImpl("2", "variable2", "description2");
