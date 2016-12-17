@@ -1,14 +1,12 @@
 package fr.univ_lille1.m2iagl.spoon.templatechallenge;
-import fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton;
-public class TemplateChallenge implements fr.univ_lille1.m2iagl.spoon.templatechallenge.ITemplateChallenge<String>{
+public class TemplateChallenge implements fr.univ_lille1.m2iagl.spoon.templatechallenge.ITemplateChallenge<Integer>{
 @Override
-public void challenge(String input){
-int i = 5;
-input = input.toLowerCase();
-String retour = "";
-for (int j = 0; j < i; j++) {
-retour = retour + input.substring(j, j + 1);
-}
+public void challenge(Integer input){
+Integer j = 5;
+input = input + 2;
+input = input - j;
+input = input * 2;
+Integer result = j / input;
 }
 
 public <T> T debug(T input){
