@@ -86,7 +86,17 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 	public void sort(){
 		Collections.sort(chainElements, new Comparator<ChainElement>() {
 			public int compare(ChainElement o1, ChainElement o2) {
-				return Integer.parseInt(o1.getLine()) - Integer.parseInt(o2.getLine());
+				int o1Line, o2Line, o1Iteration, o2Iteration;
+				o1Line = Integer.parseInt(o1.getLine());
+				o2Line = Integer.parseInt(o2.getLine());
+				o1Iteration = ((ChainElementImpl)o1).getIteration();
+				o2Iteration = ((ChainElementImpl)o2).getIteration();
+				
+				if(o1Iteration == o2Iteration) {
+					return o1Line - o2Line;
+				} else {
+					return o1Iteration - o2Iteration;
+				}
 			};
 		});
 	}

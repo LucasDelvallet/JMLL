@@ -51,9 +51,6 @@ public class DeltaDebug {
 			e1.printStackTrace();
 		}
 
-
-		CauseEffectChainSingleton.getInstance().getCauseEffectChain().sort();
-		
 		// Run to check success
 		boolean hasSucceded = true;
 		try {
@@ -63,6 +60,7 @@ public class DeltaDebug {
 		}
 		
 		CauseEffectChainSingleton.getInstance().getCauseEffectChain().removeUniteratedLine();
+		CauseEffectChainSingleton.getInstance().getCauseEffectChain().sort();
 
 		return hasSucceded;
 	}
@@ -131,7 +129,6 @@ public class DeltaDebug {
 			}
 		}
 		
-
 		return new CauseEffectChainImpl(cEsReturn);
 
 	}

@@ -16,6 +16,7 @@ public class Main {
 			Challenge challenge = new Challenge3bis();			
 			
 			CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
+			cEC.sort();
 			cEC.print();
 			System.out.println("Then, it crashed... But, you can find the bug, so it's not so bad.");
 
