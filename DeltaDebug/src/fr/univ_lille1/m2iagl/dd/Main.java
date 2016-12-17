@@ -2,23 +2,18 @@ package fr.univ_lille1.m2iagl.dd;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
-import fr.univ_lille1.m2iagl.challenge.*;
+import fr.univ_lille1.m2iagl.challenge.Challenge;
+import fr.univ_lille1.m2iagl.challenge.Challenge3ter;
 
 public class Main {
-
-	public static Integer debug(Integer input){
-		return input;
-	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void main(String[] args) {
 		try {
 			DDebuggerImpl ddebugger = new DDebuggerImpl();
 			
-			Challenge challenge = new Challenge3();			
+			Challenge challenge = new Challenge3ter();			
 			
 			CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
 			cEC.print();
