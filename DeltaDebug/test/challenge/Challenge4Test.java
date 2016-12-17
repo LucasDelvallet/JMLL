@@ -41,6 +41,7 @@ public class Challenge4Test extends ChallengeTest {
 	public void challengeTest() {
 		DDebuggerImpl ddebugger = new DDebuggerImpl();
 		CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
+		cEC.sort();
 		
 		assertEquals(2, cEC.getChain().size());
 		

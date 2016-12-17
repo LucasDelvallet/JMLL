@@ -50,6 +50,7 @@ public class Challenge2Test extends ChallengeTest {
 	public void challengeShouldBeDebbugedAndHaveFourElements() {
 		DDebuggerImpl ddebugger = new DDebuggerImpl();
 		CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
+		cEC.sort();
 		
 		assertEquals(3, cEC.getChain().size());
 		
