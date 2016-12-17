@@ -14,6 +14,7 @@ import org.junit.Test;
 import fr.univ_lille1.m2iagl.challenge.Challenge;
 import fr.univ_lille1.m2iagl.challenge.Challenge1;
 import fr.univ_lille1.m2iagl.challenge.Challenge2;
+import fr.univ_lille1.m2iagl.challenge.Challenge3;
 import fr.univ_lille1.m2iagl.dd.CauseEffectChainImpl;
 import fr.univ_lille1.m2iagl.dd.ChainElementImpl;
 import fr.univ_lille1.m2iagl.dd.DDebuggerImpl;
@@ -21,9 +22,13 @@ import fr.univ_lille1.m2iagl.dd.DeltaDebug;
 
 public class Challenge2Test extends ChallengeTest {
 	
+	@Before
+	public void setUp() throws Exception {
+		challenge = new Challenge2();
+	}
+	
 	@Test
 	public void challengeShouldSuccessWithFive() {
-		Challenge challenge = new Challenge2();
 		try {
 			challenge.challenge(5);
 		} catch (Exception e) {
@@ -33,7 +38,6 @@ public class Challenge2Test extends ChallengeTest {
 	
 	@Test
 	public void challengeShouldFailWithThree() {
-		Challenge challenge = new Challenge2();
 		try {
 			challenge.challenge(3);
 			fail("Exception should be thrown");
@@ -45,7 +49,6 @@ public class Challenge2Test extends ChallengeTest {
 	@Test
 	public void challengeShouldBeDebbugedAndHaveFourElements() {
 		DDebuggerImpl ddebugger = new DDebuggerImpl();
-		Challenge challenge = new Challenge2();			
 		CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
 		
 		assertEquals(3, cEC.getChain().size());

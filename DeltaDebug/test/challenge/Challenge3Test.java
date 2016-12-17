@@ -22,10 +22,14 @@ import fr.univ_lille1.m2iagl.dd.DDebuggerImpl;
 import fr.univ_lille1.m2iagl.dd.DeltaDebug;
 
 public class Challenge3Test extends ChallengeTest {
-
+	
+	@Before
+	public void setUp() throws Exception {
+		challenge = new Challenge3();
+	}
+	
 	@Test
 	public void shouldCrashWhenInputIsBelowFiveCharacters() {
-		Challenge3 challenge = new Challenge3();
 		try {
 			challenge.challenge("1234");
 			fail("Should throw an exception");
@@ -36,7 +40,6 @@ public class Challenge3Test extends ChallengeTest {
 	
 	@Test
 	public void shouldNotCrashWhenInputIsAboveOrEqualFiveCharacters() {
-		Challenge3 challenge = new Challenge3();
 		try {
 			challenge.challenge("12345");
 			challenge.challenge("123456");
@@ -48,7 +51,6 @@ public class Challenge3Test extends ChallengeTest {
 	@Test
 	public void challengeTest() {
 		DDebuggerImpl ddebugger = new DDebuggerImpl();
-		Challenge challenge = new Challenge3();			
 		CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
 		
 		assertEquals(6, cEC.getChain().size());
