@@ -7,7 +7,7 @@ import java.util.List;
 import bsh.EvalError;
 import bsh.Interpreter;
 
-public class Challenge2 implements Challenge<Integer> {
+public class Challenge4 implements Challenge<Integer> {
 
 	@Override
 	public Class<? extends Integer> getInputFormat() {
@@ -24,21 +24,23 @@ public class Challenge2 implements Challenge<Integer> {
 	
 	@Override
 	public Object doIt(Integer input) {
-		  int j = 5;
-		  input = input + 2;
-		  input = input - j;
-		  int k = input * 2;
-		  
-		  int result = j / k;
-		  return result;
+		int j = 5;
+		input = input + 1;
+		if(input == 4){
+			input = null;
+		}
+		input += j;
+		
+		return input;
 	}
 
 	@Override
 	public void challenge(Integer input) {
-		  int j = 5;
-		  input = input + 2; 
-		  input = input - j;
-		  int k = input * 2;
-		  int result = j / k;
-	} 
+		int j = 5;
+		input = input + 1;
+		if(input == 4){
+			input = null;
+		}
+		input += j;
+	}
 }

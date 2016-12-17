@@ -25,10 +25,10 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 		((ChainElementImpl) (chainElements.get(index))).setDescription(description);
 	}
 
-	public void setChainElementValue(int line, Object value) {
+	public void setChainElementValue(int line, Object value, String type) {
 		for(int i = 0; i < chainElements.size(); i++){
 			ChainElementImpl ceI = (ChainElementImpl)chainElements.get(i);
-			if(Integer.parseInt(ceI.getLine()) == line){
+			if(Integer.parseInt(ceI.getLine()) == line && ceI.getDescription().equals(type)){
 				if(ceI.getIteration() == -1){
 					ceI.setValue(value);
 					ceI.setIteration(0);
@@ -66,23 +66,16 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 	}
 
 	public void print() {
-		Collections.sort(chainElements, new Comparator<ChainElement>() {
-			public int compare(ChainElement o1, ChainElement o2) {
-				return Integer.parseInt(o1.getLine()) - Integer.parseInt(o2.getLine());
-			};
-		});
-
 		for (int i = 0; i < chainElements.size(); i++) {
 			ChainElementImpl ce = (ChainElementImpl) chainElements.get(i);
 
 			String iteration = "";
 			if (ce.getIteration() > 0) {
 				iteration = "  Iteration " + ce.getIteration();
-
 			}
 
 			System.out.println("Line : " + ce.getLine() + iteration + "     |     Variable name : " + ce.getVariable()
-					+ "    |    " + ce.getDescription() + ce.getValue());
+					+ "    |    " + ce.getDescription() + "  |  Value : " +ce.getValue());
 		}
 	}
 
@@ -90,4 +83,20 @@ public class CauseEffectChainImpl implements CauseEffectChain {
 		chainElements.clear();
 	}
 
+	public void sort(){
+		Collections.sort(chainElements, new Comparator<ChainElement>() {
+			public int compare(ChainElement o1, ChainElement o2) {
+				return Integer.parseInt(o1.getLine()) - Integer.parseInt(o2.getLine());
+			};
+		});
+	}
+	
+	public void removeUniteratedLine(){
+		for (int i = 0; i < chainElements.size(); i++) {
+			if(((ChainElementImpl)chainElements.get(i)).getIteration() == -1){
+				chainElements.remove(i);
+				i--;
+			}
+		}
+	}
 }
