@@ -1,34 +1,16 @@
 package fr.univ_lille1.m2iagl.spoon.processor;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.mdkt.compiler.InMemoryJavaCompiler;
 
 import fr.univ_lille1.m2iagl.challenge.Challenge;
-import fr.univ_lille1.m2iagl.dd.CauseEffectChainImpl;
-import fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton;
-import fr.univ_lille1.m2iagl.dd.ChainElement;
-import fr.univ_lille1.m2iagl.dd.ChainElementImpl;
-import resources.IFoo;
 import spoon.Launcher;
-import spoon.reflect.code.CtAssignment;
 import spoon.reflect.code.CtBlock;
-import spoon.reflect.code.CtExpression;
-import spoon.reflect.code.CtInvocation;
-import spoon.reflect.code.CtLocalVariable;
 import spoon.reflect.declaration.CtClass;
-import spoon.reflect.declaration.CtExecutable;
 import spoon.reflect.declaration.CtMethod;
-import spoon.reflect.factory.Factory;
-import spoon.reflect.reference.CtExecutableReference;
-import spoon.reflect.visitor.Filter;
 import spoon.reflect.visitor.filter.NameFilter;
 import spoon.reflect.visitor.filter.TypeFilter;
-import spoon.support.reflect.declaration.CtMethodImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChallengeProcessor {
 	
@@ -41,7 +23,7 @@ public class ChallengeProcessor {
 		
 		lines.add("public void challenge("+c.getInputFormat().getSimpleName()+" input)");
 		lines.add(process(c.getClass().getSimpleName()));
-		
+
 		lines.add("");
 		lines.add("public <T> T debug(T input, String type){");
 		lines.add("int line = Thread.currentThread().getStackTrace()[2].getLineNumber();");
