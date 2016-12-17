@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import fr.univ_lille1.m2iagl.challenge.Challenge;
 import fr.univ_lille1.m2iagl.challenge.Challenge1;
+import fr.univ_lille1.m2iagl.challenge.Challenge2;
 import fr.univ_lille1.m2iagl.dd.CauseEffectChainImpl;
 import fr.univ_lille1.m2iagl.dd.ChainElementImpl;
 import fr.univ_lille1.m2iagl.dd.DDebuggerImpl;
@@ -44,6 +45,27 @@ public class Challenge1Test {
 		pwOb.flush();
 		pwOb.close();
 		fwOb.close();
+	}
+	
+	@Test
+	public void challengeShouldSuccessWithFive() {
+		Challenge challenge = new Challenge2();
+		try {
+			challenge.challenge(5);
+		} catch (Exception e) {
+			fail("Exception should not be thrown");
+		}
+	}
+	
+	@Test
+	public void challengeShouldFailWithThree() {
+		Challenge challenge = new Challenge2();
+		try {
+			challenge.challenge(3);
+			fail("Exception should be thrown");
+		} catch (Exception e) {
+			// Exception should be thrown
+		}
 	}
 	
 	@Test

@@ -48,12 +48,33 @@ public class Challenge2Test {
 	}
 	
 	@Test
+	public void challengeShouldSuccessWithFive() {
+		Challenge challenge = new Challenge2();
+		try {
+			challenge.challenge(5);
+		} catch (Exception e) {
+			fail("Exception should not be thrown");
+		}
+	}
+	
+	@Test
+	public void challengeShouldFailWithThree() {
+		Challenge challenge = new Challenge2();
+		try {
+			challenge.challenge(3);
+			fail("Exception should be thrown");
+		} catch (Exception e) {
+			// Exception should be thrown
+		}
+	}
+	
+	@Test
 	public void challengeShouldBeDebbugedAndHaveFourElements() {
 		DDebuggerImpl ddebugger = new DDebuggerImpl();
 		Challenge challenge = new Challenge2();			
 		CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
 		
-		assertEquals(4, cEC.getChain().size());
+		assertEquals(3, cEC.getChain().size());
 		
 		assertEquals("Assignement", cEC.getChain().get(0).getDescription());
 		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(0)).getIteration());
@@ -72,12 +93,6 @@ public class Challenge2Test {
 		assertEquals("7", ((ChainElementImpl)cEC.getChain().get(2)).getLine());
 		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(2)).getValue());
 		assertEquals("k", ((ChainElementImpl)cEC.getChain().get(2)).getVariable());
-
-		assertEquals("Declaration", cEC.getChain().get(3).getDescription());
-		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(3)).getIteration());
-		assertEquals("8", ((ChainElementImpl)cEC.getChain().get(3)).getLine());
-		assertEquals(null, ((ChainElementImpl)cEC.getChain().get(3)).getValue());
-		assertEquals("result", ((ChainElementImpl)cEC.getChain().get(3)).getVariable());
 		// TODO Multiple tests
 	}
 	
