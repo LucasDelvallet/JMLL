@@ -55,7 +55,7 @@ public class DDebuggerImpl<T> implements DDebugger<T> {
 		System.out.println(++i + "\t" + "public void challenge("+c.getInputFormat().getSimpleName()+" input)");
 
 		for (String line : ChallengeProcessor.process(c.getClass().getSimpleName()).split("\n")) {
-			System.out.print(++i + "\t" + line);
+			System.out.print(++i + "\t" + line + "\n");
 		}
 		System.out.println("\n\n-------------------\n\n");
 	}

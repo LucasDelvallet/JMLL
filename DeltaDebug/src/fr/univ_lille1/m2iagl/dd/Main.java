@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 
 import fr.univ_lille1.m2iagl.challenge.Challenge;
-import fr.univ_lille1.m2iagl.challenge.Challenge3ter;
+import fr.univ_lille1.m2iagl.challenge.Challenge3bis;
 
 public class Main {
 	
@@ -13,7 +13,7 @@ public class Main {
 		try {
 			DDebuggerImpl ddebugger = new DDebuggerImpl();
 			
-			Challenge challenge = new Challenge3ter();			
+			Challenge challenge = new Challenge3bis();			
 			
 			CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
 			cEC.print();
