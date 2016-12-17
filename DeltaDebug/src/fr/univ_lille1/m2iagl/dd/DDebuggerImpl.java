@@ -3,8 +3,6 @@ package fr.univ_lille1.m2iagl.dd;
 import fr.univ_lille1.m2iagl.challenge.Challenge;
 import fr.univ_lille1.m2iagl.spoon.processor.ChallengeProcessor;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -32,7 +30,7 @@ public class DDebuggerImpl<T> implements DDebugger<T> {
 		}
 
 		writeChallenge(c);
-		displayChallenge();
+		displayChallenge(c);
 		
 		return DeltaDebug.ddmin(inputFail, inputSucess, c);
 	}
@@ -46,19 +44,20 @@ public class DDebuggerImpl<T> implements DDebugger<T> {
 		}
 	}
 
-	public void displayChallenge()
+	public void displayChallenge(Challenge<T> c)
 	{
 		int i = 0;
-		try(BufferedReader br = new BufferedReader(new FileReader("src/fr/univ_lille1/m2iagl/spoon/templatechallenge/TemplateChallenge.java"))) {
-			System.out.println("-- The challenge --");
-			System.out.println("-------------------");
-			for(String line; (line = br.readLine()) != null; )
-				System.out.println(++i + "\t" + line);
+		boolean displayLine = false;
 
-			System.out.println("-------------------\n\n");
-		} catch (IOException e) {
-			e.printStackTrace();
+		System.out.println("-- The challenge --");
+		System.out.println("-------------------");
+		System.out.println(++i + "\t" + "@Override");
+		System.out.println(++i + "\t" + "public void challenge("+c.getInputFormat().getSimpleName()+" input)");
+
+		for (String line : ChallengeProcessor.process(c.getClass().getSimpleName()).split("\n")) {
+			System.out.println(++i + "\t" + line);
 		}
+		System.out.println("-------------------\n\n");
 	}
 	
 

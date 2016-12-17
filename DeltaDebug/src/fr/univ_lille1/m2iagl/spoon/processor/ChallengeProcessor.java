@@ -20,7 +20,7 @@ public class ChallengeProcessor {
 		lines.add("import fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton;");
 		lines.add("public class TemplateChallenge implements fr.univ_lille1.m2iagl.spoon.templatechallenge.ITemplateChallenge<"+c.getInputFormat().getSimpleName()+">{");
 		lines.add("@Override");
-		
+
 		lines.add("public void challenge("+c.getInputFormat().getSimpleName()+" input)");
 		lines.add(process(c.getClass().getSimpleName()));
 
@@ -53,9 +53,7 @@ public class ChallengeProcessor {
 			  }
 			  
 		  }
-		 
 		  return null;
-
 	}
 	
 }
