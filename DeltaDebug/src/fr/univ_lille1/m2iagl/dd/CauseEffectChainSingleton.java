@@ -21,6 +21,10 @@ public class CauseEffectChainSingleton {
 		return instance;
 	}
 	
+	public static void reset() {
+		instance = null;
+	}
+	
 	public CauseEffectChainImpl getCauseEffectChain() {
 		if(causeEffectChain == null) {
 			causeEffectChain = new CauseEffectChainImpl();

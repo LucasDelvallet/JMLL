@@ -16,37 +16,12 @@ import fr.univ_lille1.m2iagl.challenge.Challenge;
 import fr.univ_lille1.m2iagl.challenge.Challenge2;
 import fr.univ_lille1.m2iagl.challenge.Challenge3;
 import fr.univ_lille1.m2iagl.dd.CauseEffectChainImpl;
+import fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton;
 import fr.univ_lille1.m2iagl.dd.ChainElementImpl;
 import fr.univ_lille1.m2iagl.dd.DDebuggerImpl;
 import fr.univ_lille1.m2iagl.dd.DeltaDebug;
 
-public class Challenge3Test {
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		FileWriter fwOb = new FileWriter(DeltaDebug.CHALLENGE_FILE, false);
-		PrintWriter pwOb = new PrintWriter(fwOb, false);
-		pwOb.flush();
-		pwOb.close();
-		fwOb.close();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		FileWriter fwOb = new FileWriter(DeltaDebug.CHALLENGE_FILE, false);
-		PrintWriter pwOb = new PrintWriter(fwOb, false);
-		pwOb.flush();
-		pwOb.close();
-		fwOb.close();
-	}
+public class Challenge3Test extends ChallengeTest {
 
 	@Test
 	public void shouldCrashWhenInputIsBelowFiveCharacters() {

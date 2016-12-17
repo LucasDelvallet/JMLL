@@ -19,33 +19,7 @@ import fr.univ_lille1.m2iagl.dd.ChainElementImpl;
 import fr.univ_lille1.m2iagl.dd.DDebuggerImpl;
 import fr.univ_lille1.m2iagl.dd.DeltaDebug;
 
-public class Challenge2Test {
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		FileWriter fwOb = new FileWriter(DeltaDebug.CHALLENGE_FILE, false);
-		PrintWriter pwOb = new PrintWriter(fwOb, false);
-		pwOb.flush();
-		pwOb.close();
-		fwOb.close();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		FileWriter fwOb = new FileWriter(DeltaDebug.CHALLENGE_FILE, false);
-		PrintWriter pwOb = new PrintWriter(fwOb, false);
-		pwOb.flush();
-		pwOb.close();
-		fwOb.close();
-	}
+public class Challenge2Test extends ChallengeTest {
 	
 	@Test
 	public void challengeShouldSuccessWithFive() {
