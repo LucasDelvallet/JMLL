@@ -40,7 +40,12 @@ public class UnaryOperatorProcessor {
 		Factory factory = spoon.createFactory();
 
 		int line = op.getPosition().getLine() - 3;
-
+/*		CauseEffectChainImpl cSuccess = CauseEffectChainSingleton.getInstance().getSuccessCauseEffectChain();
+		for (ChainElement c : cSuccess.getChain()) {
+			if (Integer.parseInt(c.getLine()) == line && c.getDescription().equals("Unary operation")) {
+				op.replace(factory.Core().createLiteral().setValue(((ChainElementImpl)c).getValue()));
+			}
+		}*/
 		
 		Collection<CtExecutableReference<?>> allExecutables = op.getParent(CtExecutable.class).getParent(CtClass.class)
 				.getAllMethods();

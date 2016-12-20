@@ -40,6 +40,7 @@ public class DeltaDebug {
 		cChallenge = UnaryOperatorProcessor.transform(cChallenge);
 		cChallenge = IfProcessor.transform(cChallenge);
 		
+		
 		// Create a new instance
 		Class tCClass = null;
 		ITemplateChallenge tC = null;
@@ -50,6 +51,8 @@ public class DeltaDebug {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+		
+		CauseEffectChainSingleton.getInstance().getCauseEffectChain().sort();
 
 		// Run to check success
 		boolean hasSucceded = true;
@@ -60,7 +63,6 @@ public class DeltaDebug {
 		}
 		
 		CauseEffectChainSingleton.getInstance().getCauseEffectChain().removeUniteratedLine();
-		CauseEffectChainSingleton.getInstance().getCauseEffectChain().sort();
 
 		return hasSucceded;
 	}
@@ -146,8 +148,7 @@ public class DeltaDebug {
 				//	failElement.setIteration(0);
 				//}
 				
-				boolean isLastFailElement = (j == (failChain.size() - 1));
-				if(isTheSameContextElements(successElement, failElement, isLastFailElement) && !isTheSameValue(successElement, failElement, isLastFailElement)) {
+				if(isTheSameContextElements(successElement, failElement) && !isTheSameValue(successElement, failElement)) {
 					result.add(failElement);
 				}
 			}
@@ -156,18 +157,16 @@ public class DeltaDebug {
 		return result;
 	}
 	
-	private static boolean isTheSameContextElements(ChainElementImpl successChain, ChainElementImpl failChain, boolean isLastFailElement) {
+	private static boolean isTheSameContextElements(ChainElementImpl successChain, ChainElementImpl failChain) {
 		boolean iterationCheck;
 		
-		if(isLastFailElement) {
-			iterationCheck = (failChain.getIteration() == successChain.getIteration()) || failChain.getIteration() == (successChain.getIteration() - 1) || ((failChain.getIteration() - 1) == successChain.getIteration());
-		} else {
-			iterationCheck = failChain.getIteration() == successChain.getIteration();
-		}
+
+		iterationCheck = failChain.getIteration() == successChain.getIteration();
+		
 		return successChain.getLine().equals(failChain.getLine()) && successChain.getVariable().equals(failChain.getVariable()) && iterationCheck;
 	}
 	
-	private static boolean isTheSameValue(ChainElementImpl successChain, ChainElementImpl failChain, boolean isLastFailElement) {		
+	private static boolean isTheSameValue(ChainElementImpl successChain, ChainElementImpl failChain) {		
 		if(successChain.getValue() == null && failChain.getValue() == null) {
 			return true;
 		}

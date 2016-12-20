@@ -61,7 +61,7 @@ public class IfProcessor {
 			index++;
 			if (ctEx.getSimpleName().equals("debug")) {
 				a.setExecutable(listctEx.get(index).getReference());
-				op.replace(a);
+				op.setCondition(a);
 			}
 		}
 
