@@ -55,7 +55,7 @@ public class Challenge4Test extends ChallengeTest {
 		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(1)).getIteration());
 		assertEquals("6", ((ChainElementImpl)cEC.getChain().get(1)).getLine());
 		assertEquals(true, ((ChainElementImpl)cEC.getChain().get(1)).getValue());
-		assertEquals("(input == 4)", ((ChainElementImpl)cEC.getChain().get(1)).getVariable());
+		assertEquals("debug((input == 4), \"If condition\")", ((ChainElementImpl)cEC.getChain().get(1)).getVariable());
 
 		// TODO Multiple tests
 	}
