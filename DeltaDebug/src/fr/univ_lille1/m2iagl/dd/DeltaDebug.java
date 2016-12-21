@@ -58,7 +58,7 @@ public class DeltaDebug {
 		boolean hasSucceded = true;
 		try {
 			tC.challenge(input);
-		} catch (Exception e1) {
+		} catch (Exception | AssertionError e1) {
 			hasSucceded = false;
 		}
 		

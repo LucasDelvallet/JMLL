@@ -20,7 +20,7 @@ public class DDebuggerImpl<T> implements DDebugger<T> {
 			try{
 				c.challenge(input);
 				inputSucess = input;
-			}catch(Exception e){
+			}catch(Exception | AssertionError e){
 				inputFail = input;
 			}
 		}
