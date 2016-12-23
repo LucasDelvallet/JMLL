@@ -54,18 +54,18 @@ public class Challenge3Test extends ChallengeTest {
 		CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
 		cEC.sort();
 		
-		assertEquals(4, cEC.getChain().size());
+		assertEquals(5, cEC.getChain().size());
 		
-		assertEquals("Assignement", cEC.getChain().get(0).getDescription());
+		assertEquals("Declaration", cEC.getChain().get(0).getDescription());
 		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(0)).getIteration());
-		assertEquals("7", ((ChainElementImpl)cEC.getChain().get(0)).getLine());
-		assertEquals("F", ((ChainElementImpl)cEC.getChain().get(0)).getValue());
-		assertEquals("retour", ((ChainElementImpl)cEC.getChain().get(0)).getVariable());
+		assertEquals("5", ((ChainElementImpl)cEC.getChain().get(0)).getLine());
+		assertEquals("FAIL", ((ChainElementImpl)cEC.getChain().get(0)).getValue());
+		assertEquals("UPPERCASE", ((ChainElementImpl)cEC.getChain().get(0)).getVariable());
 
 		assertEquals("Assignement", cEC.getChain().get(3).getDescription());
-		assertEquals(4, ((ChainElementImpl)cEC.getChain().get(3)).getIteration());
-		assertEquals("7", ((ChainElementImpl)cEC.getChain().get(3)).getLine());
-		assertEquals("Fail", ((ChainElementImpl)cEC.getChain().get(3)).getValue());
+		assertEquals(3, ((ChainElementImpl)cEC.getChain().get(3)).getIteration());
+		assertEquals("8", ((ChainElementImpl)cEC.getChain().get(3)).getLine());
+		assertEquals("FFAILaFAILiFAIL", ((ChainElementImpl)cEC.getChain().get(3)).getValue());
 		assertEquals("retour", ((ChainElementImpl)cEC.getChain().get(3)).getVariable());
 
 		// TODO Multiple tests

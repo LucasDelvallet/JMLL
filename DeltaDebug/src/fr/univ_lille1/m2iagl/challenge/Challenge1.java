@@ -21,14 +21,14 @@ public class Challenge1 implements Challenge<Integer> {
 		inputs.add(3); // Fail
 		return inputs;
 	}
-	
+
 	@Override
 	public Object doIt(Integer input) {
 		int j = 5;
 		input = input + 2;
 		input = input - j;
 		input = input * 2;
-		
+
 		int result = j / input;
 		return result;
 	}

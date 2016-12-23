@@ -10,10 +10,10 @@ public class Main {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void main(String[] args) {
 		//clearFile();
-		
+
 		DDebuggerImpl ddebugger = new DDebuggerImpl();
 
-		Challenge challenge = new Challenge4();
+		Challenge challenge = new Challenge5();
 
 		CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
 		cEC.print();

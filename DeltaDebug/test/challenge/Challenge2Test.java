@@ -47,30 +47,30 @@ public class Challenge2Test extends ChallengeTest {
 	}
 	
 	@Test
-	public void challengeShouldBeDebbugedAndHaveFourElements() {
+	public void challengeShouldBeDebbugedAndHaveThreeElements() {
 		DDebuggerImpl ddebugger = new DDebuggerImpl();
 		CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
 		cEC.sort();
 		
 		assertEquals(3, cEC.getChain().size());
 		
-		assertEquals("Assignement", cEC.getChain().get(0).getDescription());
+		assertEquals("Operator Assignement", cEC.getChain().get(0).getDescription());
 		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(0)).getIteration());
-		assertEquals("5", ((ChainElementImpl)cEC.getChain().get(0)).getLine());
-		assertEquals(5, ((ChainElementImpl)cEC.getChain().get(0)).getValue());
+		assertEquals("7", ((ChainElementImpl)cEC.getChain().get(0)).getLine());
+		assertEquals(10, ((ChainElementImpl)cEC.getChain().get(0)).getValue());
 		assertEquals("input", ((ChainElementImpl)cEC.getChain().get(0)).getVariable());
 		
 		assertEquals("Assignement", cEC.getChain().get(1).getDescription());
 		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(1)).getIteration());
-		assertEquals("6", ((ChainElementImpl)cEC.getChain().get(1)).getLine());
+		assertEquals("11", ((ChainElementImpl)cEC.getChain().get(1)).getLine());
 		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(1)).getValue());
 		assertEquals("input", ((ChainElementImpl)cEC.getChain().get(1)).getVariable());
 
 		assertEquals("Declaration", cEC.getChain().get(2).getDescription());
 		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(2)).getIteration());
-		assertEquals("7", ((ChainElementImpl)cEC.getChain().get(2)).getLine());
+		assertEquals("12", ((ChainElementImpl)cEC.getChain().get(2)).getLine());
 		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(2)).getValue());
-		assertEquals("k", ((ChainElementImpl)cEC.getChain().get(2)).getVariable());
+		assertEquals("l", ((ChainElementImpl)cEC.getChain().get(2)).getVariable());
 		// TODO Multiple tests
 	}
 	
