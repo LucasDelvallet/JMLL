@@ -68,7 +68,7 @@ public class Challenge1Test extends ChallengeTest {
 
 		assertEquals("Assignement", cEC.getChain().get(2).getDescription());
 		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(2)).getIteration());
-		assertEquals("7", ((ChainElementImpl)cEC.getChain().get(2)).getLine());
+		assertEquals("8", ((ChainElementImpl)cEC.getChain().get(2)).getLine());
 		assertEquals(0, ((ChainElementImpl)cEC.getChain().get(2)).getValue());
 		assertEquals("input", ((ChainElementImpl)cEC.getChain().get(2)).getVariable());
 	}

@@ -27,6 +27,7 @@ public class Challenge1 implements Challenge<Integer> {
 		int j = 5;
 		input = input + 2;
 		input = input - j;
+		j += 3;
 		input = input * 2;
 
 		int result = j / input;
@@ -38,6 +39,7 @@ public class Challenge1 implements Challenge<Integer> {
 		int j = 5;
 		input = input + 2;
 		input = input - j;
+		j += 3;
 		input = input * 2;
 		int result = j / input;
 	}
