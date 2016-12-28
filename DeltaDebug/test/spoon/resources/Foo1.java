@@ -1,4 +1,4 @@
-package resources;
+package spoon.resources;
 
 public class Foo1 implements IFoo { 
 	  public int m() {

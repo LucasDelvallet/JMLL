@@ -1,4 +1,4 @@
-package dd.data;
+package dd.resources;
 
 import fr.univ_lille1.m2iagl.spoon.templatechallenge.ITemplateChallenge;
 

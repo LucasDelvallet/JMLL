@@ -12,7 +12,7 @@ import fr.univ_lille1.m2iagl.dd.ChainElementImpl;
 import fr.univ_lille1.m2iagl.dd.DeltaDebug;
 
 public class DeltaDebugTest {
-	private static final String CHALLENGE_FILE = "test/dd/data/FakeTemplateChallenge.java";
+	private static final String CHALLENGE_FILE = "test/dd/resources/FakeTemplateChallenge.java";
 	private static final String CHALLENGE_NAME = "FakeTemplateChallenge";
 
 	@Test
