@@ -15,16 +15,20 @@ public class DDebuggerImpl<T> implements DDebugger<T> {
 	public CauseEffectChain debug(Challenge<T> c) {
 		T inputFail = null;
 		T inputSucess = null;
+		boolean successFound = false;
+		boolean failFound = false;
 
 		for (T input : c.getInputs()) {
 			try{
 				c.challenge(input);
 				inputSucess = input;
+				successFound = true;
 			}catch(Exception | AssertionError e){
 				inputFail = input;
+				failFound = true;
 			}
 		}
-		if (inputFail == null || inputSucess == null) {
+		if (!successFound || !failFound) {
 			System.out.println("No failing or successing input. Sorry, i will crash now.");
 			return null;
 		}

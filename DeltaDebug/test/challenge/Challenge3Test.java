@@ -13,8 +13,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import fr.univ_lille1.m2iagl.challenge.Challenge;
-import fr.univ_lille1.m2iagl.challenge.Challenge2;
-import fr.univ_lille1.m2iagl.challenge.Challenge3;
+import fr.univ_lille1.m2iagl.challenge.JMLLChallenge2;
+import fr.univ_lille1.m2iagl.challenge.JMLLChallenge3;
 import fr.univ_lille1.m2iagl.dd.CauseEffectChainImpl;
 import fr.univ_lille1.m2iagl.dd.CauseEffectChainSingleton;
 import fr.univ_lille1.m2iagl.dd.ChainElementImpl;
@@ -25,7 +25,7 @@ public class Challenge3Test extends ChallengeTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		challenge = new Challenge3();
+		challenge = new JMLLChallenge3();
 	}
 	
 	@Test

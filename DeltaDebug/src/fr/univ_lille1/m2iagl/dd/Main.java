@@ -9,12 +9,12 @@ public class Main {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void main(String[] args) {
-		//clearFile();
-
+		clearFile();
+		
 		DDebuggerImpl ddebugger = new DDebuggerImpl();
 
-		Challenge challenge = new Challenge5();
-
+		Challenge challenge = new JMLLChallenge1();
+		
 		CauseEffectChainImpl cEC = (CauseEffectChainImpl) ddebugger.debug(challenge);
 		cEC.print();
 		System.out.println("Then, it crashed... But, you can find the bug, so it's not so bad.");

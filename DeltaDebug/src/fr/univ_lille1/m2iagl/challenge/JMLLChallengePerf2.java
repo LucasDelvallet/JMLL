@@ -3,7 +3,7 @@ package fr.univ_lille1.m2iagl.challenge;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChallengePerf2 implements Challenge<Integer> {
+public class JMLLChallengePerf2 implements Challenge<Integer> {
 
 	@Override
 	public Class<? extends Integer> getInputFormat() {

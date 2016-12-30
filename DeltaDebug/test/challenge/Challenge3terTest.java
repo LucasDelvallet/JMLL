@@ -6,7 +6,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.univ_lille1.m2iagl.challenge.Challenge3ter;
+import fr.univ_lille1.m2iagl.challenge.JMLLChallenge3ter;
 import fr.univ_lille1.m2iagl.dd.CauseEffectChainImpl;
 import fr.univ_lille1.m2iagl.dd.ChainElementImpl;
 import fr.univ_lille1.m2iagl.dd.DDebuggerImpl;
@@ -15,7 +15,7 @@ public class Challenge3terTest extends ChallengeTest {
 
 	@Before
 	public void setUp() throws Exception {
-		challenge = new Challenge3ter();
+		challenge = new JMLLChallenge3ter();
 	}
 
 	@Test

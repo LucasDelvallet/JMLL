@@ -7,7 +7,7 @@ import java.util.List;
 import bsh.EvalError;
 import bsh.Interpreter;
 
-public class Challenge4 implements Challenge<Integer> {
+public class JMLLChallenge4 implements Challenge<Integer> {
 
 	@Override
 	public Class<? extends Integer> getInputFormat() {
