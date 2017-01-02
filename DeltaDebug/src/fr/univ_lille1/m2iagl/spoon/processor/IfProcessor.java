@@ -38,6 +38,8 @@ public class IfProcessor {
 		Factory factory = spoon.createFactory();
 
 		int line = op.getPosition().getLine() - 3;
+		ChainElementImpl ce = new ChainElementImpl(String.valueOf(line), op.getCondition().toString(), "If condition");
+		
 		CauseEffectChainImpl cSuccess = CauseEffectChainSingleton.getInstance().getSuccessCauseEffectChain();
 		for (ChainElement c : cSuccess.getChain()) {
 			if (Integer.parseInt(c.getLine()) == line && c.getDescription().equals("If condition")) {
@@ -65,7 +67,7 @@ public class IfProcessor {
 			}
 		}
 
-		ChainElementImpl ce = new ChainElementImpl(String.valueOf(line), op.getCondition().toString(), "If condition");
+		//ChainElementImpl ce = new ChainElementImpl(String.valueOf(line), op.getCondition().toString(), "If condition");
 		CauseEffectChainSingleton.getInstance().getCauseEffectChain().addElement(ce);
 
 		return op;
